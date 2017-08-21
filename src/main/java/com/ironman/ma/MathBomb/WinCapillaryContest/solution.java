@@ -172,6 +172,7 @@ public class solution {
         }
         System.out.println(max_val_candidate_index + " " + max_value);
         System.out.println(min_val_candidate_index + " " + min_value);
+        input.close();
     }
 
 }
