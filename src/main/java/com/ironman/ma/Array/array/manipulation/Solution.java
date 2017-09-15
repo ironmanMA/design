@@ -1,15 +1,13 @@
 package com.ironman.ma.Array.array.manipulation;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by 127.0.0.1.ma on 14/09/17.
  * URL : https://www.hackerrank.com/challenges/crush/
  */
 public class Solution {
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         int m = in.nextInt();
@@ -70,6 +68,31 @@ public class Solution {
         }
 
         System.out.println(max);
+
+    }
+
+    private static int[] twoSum(int[] nums, int target) {
+        HashSet<Integer> seen = new HashSet<Integer>();
+        HashMap<Integer, Integer> posit = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; i++) {
+            seen.add(nums[i]);
+            posit.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (seen.contains(target - nums[i]) && posit.get(target - nums[i]) != i) {
+                return new int[]{i, target - i};
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{3, 2, 4};
+        int target = 6;
+
+        System.out.println(Arrays.toString(twoSum(nums, target)));
+
 
     }
 }

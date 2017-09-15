@@ -1,2 +1,7 @@
-String Immutability, one cant edidt a string n java perse- it could only be recreated, so dont use append use string
+String Immutability, one cant edit a string in java perse- it could only be recreated, so dont use append use string
 builder, https://www.programcreek.com/2009/02/diagram-to-show-java-strings-immutability/
+
+
+method area
+heap area
+imperative declarative programming
