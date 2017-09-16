@@ -6,9 +6,13 @@ package com.ironman.ma.LinkedList;
 public class Node {
     public int data;
     public Node next;
+    public Node prev;
 
     public Node(int data) {
         this.data = data;
+    }
+
+    public Node() {
     }
 
     public static void printList(Node node) {
@@ -18,6 +22,47 @@ public class Node {
         } else {
             System.out.println("");
         }
+    }
+
+    Node SortedInsert(Node head, int data) {
+        if (head == null) {
+            Node node = new Node();
+            node.data = data;
+            return node;
+        } else {
+            Node currNode = head;
+            while (true) {
+                if (currNode.data < data) {
+                    if (currNode.next == null) {
+                        Node node = new Node();
+                        node.data = data;
+                        currNode.next = node;
+                        node.prev = currNode;
+                        break;
+                    } else {
+                        if (currNode.next.data > data) {
+                            Node node = new Node();
+                            node.data = data;
+                            Node tmp = currNode.next;
+                            currNode.next = node;
+                            node.prev = currNode;
+                            node.next = tmp;
+                            tmp.prev = node;
+                            break;
+                        } else {
+                            currNode = currNode.next;
+                        }
+                    }
+                } else {
+                    Node node = new Node();
+                    node.data = data;
+                    node.next = currNode;
+                    currNode.prev = node;
+                    return node;
+                }
+            }
+        }
+        return head;
     }
 
     int GetNode(Node head, int n) {
