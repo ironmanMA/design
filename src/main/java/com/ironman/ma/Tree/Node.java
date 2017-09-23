@@ -44,6 +44,22 @@ public class Node {
 
     }
 
+    static Node Insert(Node root, int value) {
+        if (root == null) {
+//            Node newRoot = new Node(value);
+            Node newRoot = new Node();
+            newRoot.data = value;
+            return newRoot;
+        } else {
+            if (value < root.data) {
+                root.left = Insert(root.left, value);
+            } else {
+                root.right = Insert(root.right, value);
+            }
+            return root;
+        }
+    }
+
     void preOrder(Node root) {
         /*
         root,left, right
