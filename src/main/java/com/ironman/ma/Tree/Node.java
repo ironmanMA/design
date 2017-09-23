@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class Node {
     public int data;
+    public int frequency;
+    public char charData;
     public Node left;
     public Node right;
 
@@ -26,6 +28,7 @@ public class Node {
     }
 
     public static void main(String[] args) {
+        /*
         Node root = new Node(1);
         Node root1 = new Node(2);
         Node root2 = new Node(3);
@@ -41,6 +44,27 @@ public class Node {
         new Node().topView(root);
         System.out.println(" ");
         new Node().levelOrder(root);
+        System.out.println(" ");
+        System.out.println("ABCDEF".substring(0, 1));
+        */
+        Node root = new Node(1);
+        root.charData = '\0';
+        Node root1 = new Node(2);
+        root1.charData = 'A';
+        Node root2 = new Node(3);
+        root2.charData = '\0';
+        Node root3 = new Node(4);
+        root3.charData = 'B';
+        Node root4 = new Node(4);
+        root4.charData = 'C';
+
+        root2.left = root3;
+        root2.right = root4;
+
+        root.left = root2;
+        root.right = root1;
+
+        new Node().decode("1001011", root);
 
     }
 
@@ -58,6 +82,31 @@ public class Node {
             }
             return root;
         }
+    }
+
+    static Node lca(Node root, int v1, int v2) {
+        /*
+        only works if its gauranteed if v1,v2 are present in the tree
+         */
+        if (root != null) {
+            if (root.data == v1 || root.data == v2) {
+                return root;
+            } else {
+                Node lcaLeft = lca(root.left, v1, v2);
+                Node lcaRight = lca(root.right, v1, v2);
+                if (lcaLeft != null && lcaRight != null) {
+                    return root;
+                } else if (lcaLeft != null) {
+                    return lcaLeft;
+                } else if (lcaRight != null) {
+                    return lcaRight;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+
     }
 
     void preOrder(Node root) {
@@ -156,4 +205,39 @@ public class Node {
         }
     }
 
+    void decode(String S, Node root) {
+        String decodedString = "";
+        Node currNode = root;
+//        String[] array = S.split("");
+        for (int index = 0; index < S.length(); index++) {
+            /*
+                check if curr String Exits
+             */
+            if (S.charAt(index) == '1') {
+                /*
+                    go right
+                 */
+                if (currNode.right != null) {
+                    currNode = currNode.right;
+                } else {
+                    decodedString += currNode.charData;
+                    currNode = root;
+                    index = index - 1;
+                }
+            } else {
+                /*
+                    go left
+                 */
+                if (currNode.left != null) {
+                    currNode = currNode.left;
+                } else {
+                    decodedString += currNode.charData;
+                    currNode = root;
+                    index = index - 1;
+                }
+            }
+        }
+        decodedString += currNode.charData;
+        System.out.println(decodedString);
+    }
 }
