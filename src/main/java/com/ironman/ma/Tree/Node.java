@@ -247,7 +247,26 @@ public class Node {
         System.out.println(decodedString);
     }
 
+    boolean checkSubTree(Node node, int min, int max) {
+        if (node == null)
+            return true;
+        if (node.data <= min || node.data >= max)
+            return false;
+        else {
+            if (checkSubTree(node.left, min, node.data))
+                return checkSubTree(node.right, node.data, max);
+            else
+                return false;
+        }
+    }
+
     boolean checkBST(Node root) {
+        if (root != null) {
+            if (checkSubTree(root.left, Integer.MIN_VALUE, root.data))
+                return checkSubTree(root.right, root.data, Integer.MAX_VALUE);
+            else
+                return false;
+        }
         return false;
     }
 
