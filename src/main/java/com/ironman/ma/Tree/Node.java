@@ -19,6 +19,12 @@ public class Node {
     public Node() {
     }
 
+//    @Override
+//    public String toString() {
+//        inOrder(this);
+//        return "Node{}";
+//    }
+
     static int height(Node root) {
         // Write your code here.
         if (root != null) {
@@ -240,4 +246,9 @@ public class Node {
         decodedString += currNode.charData;
         System.out.println(decodedString);
     }
+
+    boolean checkBST(Node root) {
+        return false;
+    }
+
 }
