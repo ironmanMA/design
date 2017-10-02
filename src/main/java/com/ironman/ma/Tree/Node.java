@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class Node {
     public int data;
+    public int val;
+    public int ht;
     public int frequency;
     public char charData;
     public Node left;
