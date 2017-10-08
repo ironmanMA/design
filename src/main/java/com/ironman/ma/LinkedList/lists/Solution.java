@@ -1,4 +1,4 @@
-package com.ironman.ma.LinkedList.compare.two.linked.lists.merge.two.sorted.linked.lists;
+package com.ironman.ma.LinkedList.lists;
 
 import com.ironman.ma.LinkedList.Node;
 

@@ -2,6 +2,8 @@ package com.ironman.ma;
 
 import org.apache.log4j.Logger;
 
+import java.util.Scanner;
+
 /**
  * Hello world!
  */
@@ -26,6 +28,10 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello World!");
+
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        input.close();
         log.info("testing main");
         for (int i = 0; i < 2; i++) {
             goodLog();
