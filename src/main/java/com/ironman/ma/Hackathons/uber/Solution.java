@@ -1,4 +1,4 @@
-package com.ironman.ma.CompanyQuestions.uber;
+package com.ironman.ma.Hackathons.uber;
 
 import java.util.HashMap;
 import java.util.Scanner;

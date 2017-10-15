@@ -1,4 +1,4 @@
-package com.ironman.ma.CompanyQuestions.hotstar.q2;
+package com.ironman.ma.Hackathons.hotstar.q2;
 
 import java.util.ArrayList;
 import java.util.Collections;

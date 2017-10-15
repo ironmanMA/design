@@ -1,4 +1,4 @@
-package com.ironman.ma.CompanyQuestions.uber;
+package com.ironman.ma.Hackathons.uber;
 
 /**
  * Created by 127.0.0.1.ma on 26/08/17.

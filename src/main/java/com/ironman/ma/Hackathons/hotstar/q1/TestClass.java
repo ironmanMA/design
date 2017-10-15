@@ -1,4 +1,4 @@
-package com.ironman.ma.CompanyQuestions.hotstar.q1;
+package com.ironman.ma.Hackathons.hotstar.q1;
 
 import java.math.BigInteger;
 import java.util.Scanner;

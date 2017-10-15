@@ -1,4 +1,4 @@
-package com.ironman.ma.CompanyQuestions.hotstar.q3;
+package com.ironman.ma.Hackathons.hotstar.q3;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
