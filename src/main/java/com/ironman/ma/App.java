@@ -26,7 +26,7 @@ public class App {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main2(String[] args) throws InterruptedException {
         System.out.println("Hello World!");
 
         Scanner input = new Scanner(System.in);
@@ -43,4 +43,52 @@ public class App {
         }
         goodLog();
     }
+
+    public static void leftshift(int i, int j) {
+        i <<= j;
+        System.out.println(i);
+    }
+
+    public static void main3(String args[]) {
+        int i = 4, j = 4;
+        leftshift(i, j);
+        System.out.println(i);
+        int k[] = {1, 2};
+    }
+
+//    public static void main(String [] args)
+//    {
+//
+//        int d = b.g();
+//        App a = new App();
+//        a.start();
+//    }
+//    int g() {
+//        return 2147483648;
+//    }
+
+    void start2() {
+        long[] a1 = {3, 4, 5};
+        long[] a2 = fix(a1);
+        System.out.print(a1[0] + a1[1] + a1[2] + " ");
+        System.out.println(a2[0] + a2[1] + a2[2]);
+    }
+
+    long[] fix(long[] a3) {
+        a3[1] = 7;
+        return a3;
+    }
+
+    void start() {
+        String s1 = "slip";
+        String s2 = fix(s1);
+        System.out.println(s1 + " " + s2);
+    }
+
+    String fix(String s1) {
+        s1 = s1 + "stream";
+        System.out.print(s1 + " ");
+        return "stream";
+    }
+
 }
