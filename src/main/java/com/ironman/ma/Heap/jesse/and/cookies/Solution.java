@@ -1,10 +1,17 @@
-package com.ironman.ma.Heap.qheap1;
+package com.ironman.ma.Heap.jesse.and.cookies;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by 127.0.0.1.ma on 29/10/17.
+ * Created by 127.0.0.1.ma on 06/11/17.
+ * <p>
+ * Jesse loves cookies. He wants the sweetness of all his cookies to be greater than value . To do this, Jesse repeatedly mixes two cookies with the least sweetness. He creates a special combined cookie with:
+ * <p>
+ * sweetness  Least sweet cookie   2nd least sweet cookie).
+ * <p>
+ * He repeats this procedure until all the cookies in his collection have a sweetness .
+ * You are given Jesse's cookies. Print the number of operations required to give the cookies a sweetness . Print  if this isn't possible.
  */
 public class Solution {
 
@@ -109,32 +116,28 @@ public class Solution {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int numCases = input.nextInt();
+        int threshold = input.nextInt();
 
         ArrayList<Integer> heapArr = new ArrayList<Integer>();
 
         for (int i = 0; i < numCases; i++) {
-            int queryType = input.nextInt();
-            switch (queryType) {
-                case 1:
-                    int toAdd = input.nextInt();
-                    heapArr.add(toAdd);
-                    reHeapifyUp(heapArr, heapArr.size() - 1);
-                    break;
-                case 2:
-                    int toRem = input.nextInt();
-                    for (int j = 0; j < heapArr.size(); j++) {
-                        if (toRem == heapArr.get(j)) {
-                            reHeapifyDown(heapArr, j);
-                            break;
-                        }
-                    }
-                    break;
-                case 3:
-                    // print min
-                    System.out.println(heapArr.get(0));
-                    break;
-            }
+            int toAdd = input.nextInt();
+            heapArr.add(toAdd);
+            reHeapifyUp(heapArr, heapArr.size() - 1);
         }
+
+        int numTimes = 0;
+        while (heapArr.get(0) < threshold) {
+            int min_most = heapArr.get(0);
+            reHeapifyDown(heapArr, 0);
+            int min_next = heapArr.get(0);
+            reHeapifyDown(heapArr, 0);
+            heapArr.add(min_most + 2 * min_next);
+            reHeapifyUp(heapArr, heapArr.size() - 1);
+            numTimes++;
+        }
+        System.out.println(numTimes);
+
         input.close();
     }
 }
