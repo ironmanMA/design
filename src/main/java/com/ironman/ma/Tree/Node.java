@@ -94,7 +94,7 @@ public class Node {
 
     static Node lca(Node root, int v1, int v2) {
         /*
-        only works if its gauranteed if v1,v2 are present in the tree
+        only works if its guaranteed if v1,v2 are present in the tree
          */
         if (root != null) {
             if (root.data == v1 || root.data == v2) {

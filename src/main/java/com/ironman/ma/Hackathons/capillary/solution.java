@@ -1,4 +1,4 @@
-package com.ironman.ma.MathBomb.WinCapillaryContest;
+package com.ironman.ma.Hackathons.capillary;
 
 import java.util.HashMap;
 import java.util.Scanner;
