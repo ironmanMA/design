@@ -1,0 +1,22 @@
+Scale the front-end-servers
+1. geo-level    segregative-scaling
+2. client-level segregative-sclaing
+
+diff kinds of scaling:
+1. client-level infra replication
+    say a high-scale client uses the service, one would replicate the entire architecture E2E and
+    then scale based of even deeper levels say (control layer and feeback layer)
+
+web-socket implementations
+
+TCP- UDP- WEBSOCKET- changes
+
+
+Observability:
+
+metrics (influx, prometheus),
+events (honecomb, suba-fb),
+tracing (zipkin),
+logging (ELK)
+
+UBER: jaeger
