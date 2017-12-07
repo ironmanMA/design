@@ -1,14 +1,12 @@
-package com.ironman.ma.Stack.balanced.brackets;
+package com.ironman.ma.Hackathons.redlock.q2;
 
 import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * Created by 127.0.0.1.ma on 08/10/17.
+ * Created by 127.0.0.1.ma on 07/12/17.
  */
-
 public class Solution {
-
     static String isBalanced(String s) {
         // Complete this function
         Stack<Character> symbolStack = new Stack<Character>();
