@@ -1,20 +1,20 @@
 package com.ironman.ma.DataStructures.Tree.self.balancing.tree;
 
-import com.ironman.ma.DataStructures.Tree.Node;
+import com.ironman.ma.DataStructures.Tree.TreeNode;
 
 /**
  * Created by 127.0.0.1.ma on 01/10/17.
  */
 public class Solution {
 
-    private static int getHeight(Node node) {
-        if (node == null)
+    private static int getHeight(TreeNode treeNode) {
+        if (treeNode == null)
             return -1;
         else
-            return node.ht;
+            return treeNode.ht;
     }
 
-    private static Node Balance(Node root) {
+    private static TreeNode Balance(TreeNode root) {
         if (getHeight(root.left) > getHeight(root.right)) {
             // overall left heavy, check for num rotations
             int localHeightRight = getHeight(root.left.right),
@@ -22,7 +22,7 @@ public class Solution {
             // check heavyness of left child.
             if (localHeightLeft > localHeightRight) {
                 // heavy on left, one rotation
-                Node newRoot = root.left;
+                TreeNode newRoot = root.left;
                 root.left = newRoot.right;
                 newRoot.right = root;
                 // recalculate heights for oldRoot and newRoot.
@@ -31,8 +31,8 @@ public class Solution {
                 return newRoot;
             } else {
                 // heavy on right, two rotations
-                Node newRoot = root.left.right;
-                Node leftChild = root.left;
+                TreeNode newRoot = root.left.right;
+                TreeNode leftChild = root.left;
 
                 leftChild.right = newRoot.left;
                 root.left = newRoot.right;
@@ -51,7 +51,7 @@ public class Solution {
             // check heavyness of right child.
             if (localHeightRight > localHeightLeft) {
                 //heavy on right, one rotation
-                Node newRoot = root.right;
+                TreeNode newRoot = root.right;
                 root.right = newRoot.left;
                 newRoot.left = root;
                 root.ht = Math.max(getHeight(root.left), getHeight(root.right)) + 1;
@@ -59,8 +59,8 @@ public class Solution {
                 return newRoot;
             } else {
                 // two rotations
-                Node rightChild = root.right;
-                Node newRoot = rightChild.left;
+                TreeNode rightChild = root.right;
+                TreeNode newRoot = rightChild.left;
 
                 root.right = newRoot.left;
                 rightChild.left = newRoot.right;
@@ -78,12 +78,12 @@ public class Solution {
     }
 
 
-    static Node insert(Node root, int val) {
+    static TreeNode insert(TreeNode root, int val) {
         if (root == null) {
-            Node node = new Node();
-            node.val = val;
-            node.ht = 0;
-            return node;
+            TreeNode treeNode = new TreeNode();
+            treeNode.val = val;
+            treeNode.ht = 0;
+            return treeNode;
         }
         if (val < root.val)
             root.left = insert(root.left, val);
@@ -103,7 +103,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        Node root = insert(null, 5);
+        TreeNode root = insert(null, 5);
         root = insert(root, 2);
         root = insert(root, 6);
         root = insert(root, 4);

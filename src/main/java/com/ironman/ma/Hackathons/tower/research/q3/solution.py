@@ -19,10 +19,10 @@ class Node:
 
 
 def get_node(name):
-    node = all_nodes.get(name, Node(name))
-    all_nodes[name] = node
-    # print node.name
-    return node
+    treeNode = all_nodes.get(name, Node(name))
+    all_nodes[name] = treeNode
+    # print treeNode.name
+    return treeNode
 
 
 def load():
