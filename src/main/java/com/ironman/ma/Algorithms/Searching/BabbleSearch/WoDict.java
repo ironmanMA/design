@@ -1,8 +1,8 @@
-package com.ironman.ma.Algorithms.Searching;
+package com.ironman.ma.Algorithms.Searching.BabbleSearch;
 
 import java.util.ArrayList;
 
-public class BabbleSearch {
+public class WoDict {
     static int rowLimit = 0;
     static int colLimit = 0;
     static int[][] visited;
