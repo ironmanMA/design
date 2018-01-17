@@ -325,6 +325,11 @@ public class App {
         for(int i:p2){
             k.add(i);
         }
+
+
+        Double.parseDouble("2.3");
+        float f=012;
+        boolean kk=f>2;
 //        System.out.println(maximumGap(k));
 //        System.out.println(maxArr(k));
 //        System.out.println(ncr(5,2));
@@ -336,8 +341,297 @@ public class App {
 //        System.out.println(getRow(30));
 //        System.out.println(maxset(k));
 //        System.out.println(firstMissingPositiveN(k));
-        nextPermutation(k);
+//        nextPermutation(k);
 
+//        int[] k1a=new int[]{1, 2, 3, 4};
+//        int[] k2a=new int[]{10, 2, 6, 14};
+        int[] k1a=new int[]{1, 2, 3};
+        int[] k2a=new int[]{2, 3, 4};
+
+        ArrayList<Integer> k1 =new ArrayList<Integer>();
+        for(int i:k1a){
+            k1.add(i);
+        }
+
+        ArrayList<Integer> k2 =new ArrayList<Integer>();
+        for(int i:k2a){
+            k2.add(i);
+        }
+
+        double kint=8.000;
+        double integer=(double)((int)8.9);
+        if(kint-((int)kint)==0){
+            System.out.println(true);
+        }
+//        System.out.println(isPower(823543));
+//        System.out.println(isPower(1024000000));
+//        System.out.println(hotel(k1,k2,1));
+//        System.out.println(isPalindrome(10101));
+        System.out.println(reverse(-1024332960));
+       }
+
+    public static int reverse(int A) {
+        int mul=1;
+        if(A<0){
+            mul=-1;
+            A=A*-1;
+        }
+        int rev=0;
+        while(A>9){
+            if(rev>(Integer.MAX_VALUE-A%10)/10){
+                return 0;
+            }
+            rev=rev*10+A%10;
+            A=A/10;
+        }
+        if(rev>(Integer.MAX_VALUE-A%10)/10){
+            return 0;
+        }
+        rev=rev*10+A;
+        return rev*mul;
+    }
+
+    public static int isPalindrome(int A) {
+        if(A<0){
+            return 0;
+        }
+        if(A<10){
+            return 1;
+        }
+        int digits=(int)Math.log10(A)+1;
+
+        int count=1;
+        while(count<=digits/2){
+            int lsd=A%((int)Math.pow(10,count));
+            lsd=lsd/((int)Math.pow(10,count-1));
+            int msd=A/((int)Math.pow(10,digits-count));
+            msd=msd%10;
+            if(lsd!=msd){
+                return 0;
+            }
+            count++;
+        }
+        return 1;
+    }
+
+    public static int isPower(int A) {
+        if(A==1){
+            return 1;
+        }
+        for(double i=2.0;i<200.0;i++){
+            double ith_root=Math.pow(A,1.0/i);
+            if(ith_root<1){
+                return 0;
+            }
+            double chck=Math.ceil(ith_root);
+            if(Math.pow(chck,i)==(double) A){
+//                int regen=(int)Math.pow(ith_root,i);
+//                System.out.println(i+","+regen+","+A+", "+ith_root);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public class customComparator implements Comparator<App>{
+        public int compare(App o1, App o2) {
+            return 0;
+        }
+    }
+
+    public static boolean hotelMaaki(ArrayList<Integer> arrive, ArrayList<Integer> depart, int K){
+        Collections.sort(arrive, new Comparator<Integer>() {
+            public int compare(Integer a , Integer b){
+                return a-b;
+            }
+        });
+
+        return false;
+    }
+
+    public static boolean hotel(ArrayList<Integer> arrive, ArrayList<Integer> depart, int K) {
+        if(arrive==null ||depart==null || arrive.size()!=depart.size()){
+            return false;
+        }
+        ArrayList<Integer> repre=new ArrayList<Integer>();
+
+        ArrayList<Integer> tobe=new ArrayList<Integer>();
+
+        for(int i=0;i<arrive.size();i++){
+            repre.add(i);
+            tobe.add(arrive.get(i));
+        }
+        for(int i=0;i<depart.size();i++){
+            repre.add(arrive.size()+i);
+            tobe.add(depart.get(i));
+        }
+
+        final ArrayList<Integer> array = new ArrayList<Integer>(tobe);
+
+        // Collections.sort(repre,new SortbyArrival(tobe));
+        Collections.sort(repre,new Comparator<Integer>(){
+            public int compare(Integer c1, Integer c2){
+                if(array.get(c1)==array.get(c2)){
+                    return c2-c1;
+                }
+                return array.get(c1)-array.get(c2);
+            }
+        });
+
+        long[] bookings=new long[tobe.size()];
+
+        for(int i=0;i<repre.size();i++){
+            int index=repre.get(i);
+            if(index<arrive.size()){
+                bookings[i]++;
+            }else{
+                bookings[i]--;
+            }
+        }
+        long sum=0;
+        for(int i=0;i<bookings.length;i++){
+            sum+=bookings[i];
+            if(sum>K){
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    public int solve(ArrayList<String> A) {
+        if(A==null||A.size()<3){
+            return 0;
+        }
+
+        ArrayList<Float> b00_67=new ArrayList<Float>();
+        ArrayList<Float> b00_67_min=new ArrayList<Float>();
+        ArrayList<Float> b00_67_max=new ArrayList<Float>();
+
+        ArrayList<Float> b67_1=new ArrayList<Float>();
+        ArrayList<Float> b67_1_min=new ArrayList<Float>();
+        ArrayList<Float> b67_1_max=new ArrayList<Float>();
+
+        ArrayList<Float> b1_2=new ArrayList<Float>();
+        ArrayList<Float> b1_2_min=new ArrayList<Float>();
+        ArrayList<Float> b1_2_max=new ArrayList<Float>();
+
+        for(String s:A){
+            Float num= Float.parseFloat(s);
+            ArrayList<Float> targeList=new ArrayList<Float>();
+            ArrayList<Float> targeList_min=new ArrayList<Float>();
+            ArrayList<Float> targeList_max=new ArrayList<Float>();
+            if(num<0.67){
+                targeList=b00_67;
+                targeList_min=b00_67_min;
+                targeList_max=b00_67_max;
+            }else if(num>=0.67 && num<=1){
+                targeList=b67_1;
+                targeList_min=b67_1_min;
+                targeList_max=b67_1_max;
+            }else{
+                targeList=b1_2;
+                targeList_min=b1_2_min;
+                targeList_max=b1_2_max;
+            }
+
+            targeList.add(num);
+            if(targeList_min.size()<3){
+                targeList_min.add(num);
+                Collections.sort(targeList_min);
+            }else{
+                for(int i=0;i<targeList_min.size();i++){
+                    if(num<=targeList_min.get(i)){
+                        targeList_min.add(i,num);
+                        targeList_min.remove(targeList_min.size()-1);
+                    }
+                }
+            }
+            if(targeList_max.size()<3){
+                targeList_max.add(num);
+                Collections.sort(targeList_max,Collections.reverseOrder());
+            }else{
+                for(int i=0;i<targeList_max.size();i++){
+                    if(num>=targeList_max.get(i)){
+                        targeList_max.add(i,num);
+                        targeList_max.remove(targeList_max.size()-1);
+                    }
+                }
+            }
+        }
+
+        //AAA
+        float actSum=0;
+        if(b00_67_max.size()==3){
+            for(int i=0;i<b00_67_max.size();i++){
+                actSum+=b00_67_max.get(i);
+            }
+            if(actSum>1 && actSum<2){
+                return 1;
+            }
+        }
+
+
+        //AAB
+        actSum=0;
+        if(b00_67_max.size()>=2){
+            if(b67_1_min.size()>=1){
+                actSum=b00_67_max.get(0)+b00_67_max.get(1)+b67_1_min.get(0);
+                if(actSum>1 && actSum<2){
+                    return 1;
+                }
+            }
+            if(b67_1_max.size()>=1){
+                actSum=b00_67_max.get(0)+b00_67_max.get(1)+b67_1_max.get(0);
+                if(actSum>1 && actSum<2){
+                    return 1;
+                }
+            }
+        }
+        if(b00_67_min.size()>=2){
+            if(b67_1_min.size()>=1){
+                actSum=b00_67_min.get(0)+b00_67_min.get(1)+b67_1_min.get(0);
+                if(actSum>1 && actSum<2){
+                    return 1;
+                }
+            }
+            if(b67_1_max.size()>=1){
+                actSum=b00_67_min.get(0)+b00_67_min.get(1)+b67_1_max.get(0);
+                if(actSum>1 && actSum<2){
+                    return 1;
+                }
+            }
+        }
+
+        //ABC
+        actSum=0;
+        if(b00_67_min.size()>=1 && b67_1_min.size()>=1 && b1_2_min.size()>=1){
+            actSum=b00_67_min.get(0)+b67_1_min.get(0)+b1_2_min.get(0);
+            if(actSum>1 && actSum<2){
+                return 1;
+            }
+        }
+
+        //AAC
+        actSum=0;
+        if(b00_67_min.size()>=2 && b1_2_min.size()>=1){
+            actSum=b00_67_min.get(0)+b00_67_min.get(1)+b1_2_min.get(0);
+            if(actSum>1 && actSum<2){
+                return 1;
+            }
+        }
+
+        //BBA
+        actSum=0;
+        if(b00_67_min.size()>=1 && b67_1_min.size()>=2){
+            actSum=b00_67_min.get(0)+b67_1_min.get(0)+b67_1_min.get(1);
+            if(actSum>1 && actSum<2){
+                return 1;
+            }
+        }
+
+        return 0;
     }
 
     public static void nextPermutation(ArrayList<Integer> a) {
@@ -563,7 +857,7 @@ public class App {
             indexList.add(i);
         }
         //sort them indexList using A.
-        Collections.sort(indexList,new Comparator<Integer>(){
+        Collections.sort(indexList,new Comparator<Integer>( ){
             public int compare(Integer c1, Integer c2){
                 return A.get(c1) - A.get(c2);
             }
