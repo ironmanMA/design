@@ -299,56 +299,622 @@ public class App {
     }
 
     public static void main(String[] args) {
+//        int[] kN = new int[]{1,2,3,4,5,6,7,8,9,10};
+//        int[] kN = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 
-        int[] l = new int[]{389, 299, 65, 518, 361, 103, 342, 406, 24, 79, 192, 181, 178, 205, 38, 298, 218, 143, 446, 324, 82, 41, 312, 166, 252, 59, 91, 6, 248, 395, 157, 332, 352, 57, 106, 246, 506, 261, 16, 470, 224, 228, 286, 121, 193, 241, 203, 36, 264, 234, 386, 471, 225, 466, 81, 58, 253, 468, 31, 197, 15, 282, 334, 171, 358, 209, 213, 158, 355, 243, 75, 411, 43, 485, 291, 270, 25, 100, 194, 476, 70, 402, 403, 109, 322, 421, 313, 239, 327, 238, 257, 433, 254, 328, 163, 436, 520, 437, 392, 199, 63, 482, 222, 500, 454, 84, 265, 508, 416, 141, 447, 258, 384, 138, 47, 156, 172, 319, 137, 62, 85, 154, 97, 18, 360, 244, 272, 93, 263, 262, 266, 290, 369, 357, 176, 317, 383, 333, 204, 56, 521, 502, 326, 353, 469, 455, 190, 393, 453, 314, 480, 189, 77, 129, 439, 139, 441, 443, 351, 528, 182, 101, 501, 425, 126, 231, 445, 155, 432, 418, 95, 375, 376, 60, 271, 74, 11, 419, 488, 486, 54, 460, 321, 341, 174, 408, 131, 115, 107, 134, 448, 532, 292, 289, 320, 14, 323, 61, 481, 371, 151, 385, 325, 472, 44, 335, 431, 187, 51, 88, 105, 145, 215, 122, 162, 458, 52, 496, 277, 362, 374, 26, 211, 452, 130, 346, 10, 315, 459, 92, 531, 467, 309, 34, 281, 478, 477, 136, 519, 196, 240, 12, 288, 302, 119, 356, 503, 527, 22, 27, 55, 343, 490, 127, 444, 308, 354, 278, 497, 191, 294, 117, 1, 396, 125, 148, 285, 509, 208, 382, 297, 405, 245, 5, 330, 311, 133, 274, 275, 118, 463, 504, 39, 99, 442, 337, 169, 140, 104, 373, 221, 499, 413, 124, 510, 159, 465, 80, 276, 83, 329, 524, 255, 387, 259, 397, 491, 517, 23, 4, 230, 48, 349, 412, 142, 114, 487, 381, 164, 35, 67, 498, 73, 440, 108, 226, 96, 132, 144, 207, 235, 33, 69, 128, 236, 364, 198, 475, 173, 493, 150, 90, 515, 111, 68, 232, 340, 112, 526, 492, 512, 495, 429, 146, 336, 17, 350, 251, 7, 184, 76, 380, 359, 293, 19, 49, 345, 227, 212, 430, 89, 474, 279, 201, 398, 347, 273, 37, 185, 177, 102, 304, 295, 422, 94, 426, 514, 116, 183, 180, 494, 42, 305, 152, 390, 30, 247, 451, 32, 388, 331, 78, 424, 368, 394, 188, 306, 449, 8, 214, 120, 179, 280, 511, 409, 338, 153, 507, 370, 461, 217, 161, 483, 147, 242, 86, 417, 268, 71, 462, 420, 167, 513, 379, 307, 522, 435, 113, 296, 457, 525, 45, 529, 423, 427, 2, 438, 64, 316, 46, 40, 13, 516, 367, 233, 110, 318, 250, 283, 216, 186, 310, 237, 377, 365, 175, 479, 378, 66, 414, 473, 165, 210, 50, 348, 372, 363, 339, 20, 168, 284, 415, 505, 206, 53, 223, 434, 202, 123, 399, 400, 135, 269, 428, 219, 456, 28, 464, 267, 489, 98, 391, 195, 366, 300, 484, 533, 229, 213, 149, 160, 256, 303, 530, 301, 29, 404, 344, 401, 220, 287, 9, 407, 170, 450, 523, 249, 72, 410, 3, 21, 200, 260};
-        int[] j2 = new int[]{699, 2, 690, 936, 319, 784, 562, 35, 151, 698, 126, 730, 587, 157, 201, 761, 956, 359, 198, 986, 915, 7, 703, 324, 814, 382, 294, 204, 120, 731, 615, 330, 486, 52, 223, 376, 649, 458, 564, 971, 72, 605, 177, 20, 461, 790, 872, 363, 916, 435, 991, 184, 410, 320, 16, 480, 768, 801, 117, 338, 650, 786, 17, 369, 979, 304, 445, 688, 862, 229, 311, 351, 985, 697, 135, 299, 310, 3, 643, 221, 831, 196, 887, 679, 484, 209, 824, 292, 588, 721, 140, 675, 827, 913, 271, 170, 812, 552, 334, 860, 981, 550, 308, 584, 442, 328, 251, 456, 976, 31, 507, 954, 982, 742, 45, 727, 794, 309, 527, 623, 56, 843, 436, 681, 143, 130, 689, 870, 362, 580, 560, 474, 385, 525, 881, 51, 890, 917, 820, 826, 139, 443, 978, 144, 512, 205, 682, 188, 344, 429, 497, 181, 749, 864, 664, 145, 621, 629, 886, 572, 89, 725, 945, 29, 553, 977, 783, 590, 236, 728, 125, 90, 492, 261, 543, 259, 662, 622, 285, 392, 561, 670, 200, 504, 246, 513, 910, 583, 460, 179, 207, 709, 127, 926, 816, 426, 520, 174, 464, 883, 780, 5, 268, 606, 1, 109, 704, 391, 661, 924, 516, 241, 477, 952, 405, 522, 247, 335, 356, 839, 423, 779, 4, 43, 720, 238, 965, 951, 914, 10, 496, 775, 651, 788, 373, 491, 746, 799, 518, 93, 86, 774, 652, 955, 494, 252, 781, 946, 412, 202, 741, 719, 612, 673, 896, 1000, 289, 554, 69, 424, 980, 506, 593, 889, 25, 959, 28, 736, 8, 969, 865, 657, 567, 434, 9, 167, 357, 929, 645, 250, 565, 94, 928, 473, 509, 823, 313, 762, -1, 208, 903, 922, 655, 948, 326, 485, 150, 73, 505, 225, 122, 129, 648, 838, 811, 972, 735, 78, 428, 740, 782, 632, 316, 440, 737, 297, 873, 281, 479, 654, 0, 633, 212, 152, 154, 470, 866, 79, 722, 958, 732, 900, 832, 278, 58, 842, 745, 540, 169, 347, 592, 438, 882, 462, 53, 34, 519, 489, 85, 757, 919, 701, 15, 211, 667, 637, 74, 573, 240, 559, -2, 472, 203, 112, 162, 776, -4, 155, 837, 99, 98, 64, 101, 983, 366, 853, 970, 482, 40, 921, 374, 758, 413, 339, 705, 771, 360, 734, 282, 219, 766, 535, 133, 532, 254};
-        int[] j = new int[]{417, 929, 845, 462, 675, 175, 73, 867, 14, 201, 777, 407, 80, 882, 785, 563, 209, 261, 776, 362, 730, 74, 649, 465, 353, 801, 503, 154, 998, 286, 520, 692, 68, 805, 835, 210, 819, 341, 564, 215, 984, 643, 381, 793, 726, 213, 866, 706, 97, 538, 308, 797, 883, 59, 328, 743, 694, 607, 729, 821, 32, 672, 130, 13, 76, 724, 384, 444, 884, 192, 917, 75, 551, 96, 418, 840, 235, 433, 290, 954, 549, 950, 21, 711, 781, 132, 296, 44, 439, 164, 401, 505, 923, 136, 317, 548, 787, 224, 23, 185, 6, 350, 822, 457, 489, 133, 31, 830, 386, 671, 999, 255, 222, 944, 952, 637, 523, 494, 916, 95, 734, 908, 90, 541, 470, 941, 876, 264, 880, 761, 535, 738, 128, 772, 39, 553, 656, 603, 868, 292, 117, 966, 259, 619, 836, 818, 493, 592, 380, 500, 599, 839, 268, 67, 591, 126, 773, 635, 800, 842, 536, 668, 896, 260, 664, 506, 280, 435, 618, 398, 533, 647, 373, 713, 745, 478, 129, 844, 640, 886, 972, 62, 636, 79, 600, 263, 52, 719, 665, 376, 351, 623, 276, 66, 316, 813, 663, 831, 160, 237, 567, 928, 543, 508, 638, 487, 234, 997, 307, 480, 620, 890, 216, 147, 271, 989, 872, 994, 488, 291, 331, 8, 769, 481, 924, 166, 89, 824, -4, 590, 416, 17, 814, 728, 18, 673, 662, 410, 727, 667, 631, 660, 625, 683, 33, 436, 930, 91, 141, 948, 138, 113, 253, 56, 432, 744, 302, 211, 262, 968, 945, 396, 240, 594, 684, 958, 343, 879, 155, 395, 288, 550, 482, 557, 826, 598, 795, 914, 892, 690, 964, 981, 150, 179, 515, 205, 265, 823, 799, 190, 236, 24, 498, 229, 420, 753, 936, 191, 366, 935, 434, 311, 920, 167, 817, 220, 219, 741, -2, 674, 330, 909, 162, 443, 412, 974, 294, 864, 971, 760, 225, 681, 689, 608, 931, 427, 687, 466, 894, 303, 390, 242, 339, 252, 20, 218, 499, 232, 184, 490, 4, 957, 597, 477, 354, 677, 691, 25, 580, 897, 542, 186, 359, 346, 409, 655, 979, 853, 411, 344, 358, 559, 765, 383, 484, 181, 82, 514, 582, 593, 77, 228, 921, 348, 453, 274, 449, 106, 657, 783, 782, 811, 333, 305, 784, 581, 746, 858, 249, 479, 652, 270, 429, 614, 903, 102, 378, 575, 119, 196, 12, 990, 356, 277, 169, 70, 518, 282, 676, 137, 622, 616, 357, 913, 161, 3, 589, 327};
-        int[] p = new int[]{1, 2, 5, 3, 3};
-//        int[] p2=new int[] { 701, 900 ,703 ,52 ,1 };
-        int[] p2 = new int[]{444, 994, 508, 72, 125, 299, 181, 238, 354, 223, 691, 249, 838, 890, 758, 675, 424, 199, 201, 788, 609, 582, 979, 259, 901, 371, 766, 759, 983, 728, 220, 16, 158, 822, 515, 488, 846, 321, 908, 469, 84, 460, 961, 285, 417, 142, 952, 626, 916, 247, 116, 975, 202, 734, 128, 312, 499, 274, 213, 208, 472, 265, 315, 335, 205, 784, 708, 681, 160, 448, 365, 165, 190, 693, 606, 226, 351, 241, 526, 311, 164, 98, 422, 363, 103, 747, 507, 669, 153, 856, 701, 319, 695, 52};
-//        int[] p2=new int[] {3,5,4,2 };
-//        int[] p2=new int[] {3,2,1 };
-//        int[] p2=new int[] {100 ,100 ,200, 100 ,100 };
-//        int[] p2=new int[] {83564666, 2976674, 46591497, 24720696, 16376995, 63209921, 25486800, 49369261, 20465079, 64068560, 7453256, 14180682, 65396173, 45808477, 10172062, 28790225, 82942061, 88180229, 62446590, 77573854, 79342753, 2472968, 74250054, 17223599, 47790265, 24757250, 40512339, 24505824, 30067250, 82972321, 32482714, 76111054, 74399050, 65518880, 94248755, 76948016, 76621901, 46454881, 40376566, 13867770, 76060951, 71404732, 21608002, 26893621, 27370182, 35088766, 64827587, 67610608, 90182899, 66469061, 67277958, 92926221, 58156218, 44648845, 37817595, 46518269, 44972058, 27607545, 99404748, 39262620, 98825772, 89950732, 69937719, 78068362, 78924300, 91679939, 52530444, 71773429, 57678430, 75699274, 5835797, 74160501, 51193131, 47950620, 4572042, 85251576, 49493188, 77502342, 3244395, 51211050, 44229120, 2135351, 47258209, 77312779, 37416880, 59038338, 96069936, 20766025, 35497532, 67316276, 38312269, 38357645, 41600875, 58590177, 99257528, 99136750, 4796996, 84369137, 54237155, 64368327, 94789440, 40718847, 12226041, 80504660, 8177227, 85151842, 36165763, 72764013, 36326808, 80969323, 22947547, 76322099, 7536094, 18346503, 65759149, 45879388, 53114170, 92521723, 15492250, 42479923, 20668783, 64053151, 68778592, 3669297, 73903133, 28973293, 73195487, 64588362, 62227726, 17909010, 70683505, 86982984, 64191987, 71505285, 45949516, 28244755, 33863602, 18256044, 25110337, 23997763, 81020611, 10135495, 925679, 98158797, 73400633, 27282156, 45863518, 49288993, 52471826, 30553639, 76174500, 28828417, 41628693, 80019078, 64260962, 5577578, 50920883, 16864714, 54950300, 9267396, 56454292, 40872286, 33819401, 75369837, 6552946, 26963596, 22368984, 43723768, 39227673, 98188566, 1054037, 28292455, 18763814, 72776850, 47192134, 58393410, 14487674, 4852891, 44100801, 9755253, 37231060, 42836447, 38104756, 77865902, 67635663, 43494238, 76484257, 80555820, 8632145, 3925993, 81317956, 12645616, 23438120, 48241610, 20578077, 75133501, 46214776, 35621790, 15258257, 20145132, 32680983, 94521866, 43456056, 19341117, 29693292, 38935734, 62721977, 31340268, 91841822, 22303667, 96935307, 29160182, 61869130, 33436979, 32438444, 87945655, 43629909, 88918708, 85650550, 4201421, 11958347, 74203607, 37964292, 56174257, 20894491, 33858970, 45292153, 22249182, 77695201, 34240048, 36320401, 64890030, 81514017, 58983774, 88785054, 93832841, 12338671, 46297822, 26489779, 85959340 };
-//        int[] p2=new int[] { -54, 84, -88, 30, 65, -66, 17, -68, -40, 42, 0, -43, -33, -60, 85, -94, 43, -18, 86, -81, -30, 3, 32, -50, 94, -96, -9, -82, 3, -62, 23, -50, 86, -36, -62, 8, 51, 34, 1, -2, -25, -37, 82, 17, -10, 60, -61, -71, -56, 19 };
-//        int[] p2=new int[] {  -2, -41, -68, -32, -25, -9, -96, -43, 1, 90, 74, -97, 64, 10, -48, -3, -100, 86, 43, -12, 80, 21, 78, -13, 35, -35, -56, 64, 12, -48, 55, 77, 36, -82, -84, 73, -64, -72, 7, -53, 52, -37, -3, 74, -32, -83, -35, -64, -61, 28 };
-//        int[] p2=new int[] {417, 929, 845, 462, 675, 175, 73, 867, 14, 201, 777, 407, 80, 882, 785, 563, 209, 261, 776, 362, 730, 74, 649, 465, 353, 801, 503, 154, 998, 286, 520, 692, 68, 805, 835, 210, 819, 341, 564, 215, 984, 643, 381, 793, 726, 213, 866, 706, 97, 538, 308, 797, 883, 59, 328, 743, 694, 607, 729, 821, 32, 672, 130, 13, 76, 724, 384, 444, 884, 192, 917, 75, 551, 96, 418, 840, 235, 433, 290, 954, 549, 950, 21, 711, 781, 132, 296, 44, 439, 164, 401, 505, 923, 136, 317, 548, 787, 224, 23, 185, 6, 350, 822, 457, 489, 133, 31, 830, 386, 671, 999, 255, 222, 944, 952, 637, 523, 494, 916, 95, 734, 908, 90, 541, 470, 941, 876, 264, 880, 761, 535, 738, 128, 772, 39, 553, 656, 603, 868, 292, 117, 966, 259, 619, 836, 818, 493, 592, 380, 500, 599, 839, 268, 67, 591, 126, 773, 635, 800, 842, 536, 668, 896, 260, 664, 506, 280, 435, 618, 398, 533, 647, 373, 713, 745, 478, 129, 844, 640, 886, 972, 62, 636, 79, 600, 263, 52, 719, 665, 376, 351, 623, 276, 66, 316, 813, 663, 831, 160, 237, 567, 928, 543, 508, 638, 487, 234, 997, 307, 480, 620, 890, 216, 147, 271, 989, 872, 994, 488, 291, 331, 8, 769, 481, 924, 166, 89, 824, -4, 590, 416, 17, 814, 728, 18, 673, 662, 410, 727, 667, 631, 660, 625, 683, 33, 436, 930, 91, 141, 948, 138, 113, 253, 56, 432, 744, 302, 211, 262, 968, 945, 396, 240, 594, 684, 958, 343, 879, 155, 395, 288, 550, 482, 557, 826, 598, 795, 914, 892, 690, 964, 981, 150, 179, 515, 205, 265, 823, 799, 190, 236, 24, 498, 229, 420, 753, 936, 191, 366, 935, 434, 311, 920, 167, 817, 220, 219, 741, -2, 674, 330, 909, 162, 443, 412, 974, 294, 864, 971, 760, 225, 681, 689, 608, 931, 427, 687, 466, 894, 303, 390, 242, 339, 252, 20, 218, 499, 232, 184, 490, 4, 957, 597, 477, 354, 677, 691, 25, 580, 897, 542, 186, 359, 346, 409, 655, 979, 853, 411, 344, 358, 559, 765, 383, 484, 181, 82, 514, 582, 593, 77, 228, 921, 348, 453, 274, 449, 106, 657, 783, 782, 811, 333, 305, 784, 581, 746, 858, 249, 479, 652, 270, 429, 614, 903, 102, 378, 575, 119, 196, 12, 990, 356, 277, 169, 70, 518, 282, 676, 137, 622, 616, 357, 913, 161, 3, 589, 327 };
-//        int[] p2=new int[] { 229, 888, 742, 191, 843, 721, 268, 439, 238, 585, 120, 514, 201, 829, 334, 467, 636, 735, 743, 405, 541, 710, 798, 632, 397, 625, 440, 508, 794, 696, 319, 810, 297, 369, 425, 617, 520, 216, 43, 759, 258, 914, 863, 929, 638, 656, 699, 648, 275, 786, 315, 370, 462, 969, 828, 727, 756, 200, 243, 842, 46, 110, 158, 361, 224, 560, 539, 874, 505, 621, 661, 8, 808, 635, 609, 213, 844, 67, 922, 74, 481, 237, 174, 449, 40, 154, 905, 571, 558, 952, 24, 658, 662, 179, 686, -4, 784, 300, 755, 873, 618, 981, 928, 286, 188, 150, 73, 1000, 598, 225, 814, 595, 532, 673, 793, 290, 774, 909, 876, 855, 375, 235, 524, 365, 613, 333, 7, 336, 848, 959, 797, 328, 90, 629, 140, 59, 69, 339, 640, 199, 732, 317, 395, 940, 263, 799, 172, 570, 56, 730, 468, 461, 801, 282, 502, 389, 295, 871, 740, 921, 35, 933, 690, 717, 778, 48, 547, 257, 823, 272, 985, 681, 528, 204, 536, 889, 486, 305, 586, 956, 861 };
-        ArrayList<Integer> k = new ArrayList<Integer>();
-        for (int i : p2) {
-            k.add(i);
+//        int[] kN = new int[]{658, 786, 531, 47, 169, 397, 914};
+        //9140
+
+//        int[] kN = new int[]{640, 435, 647, 352, 8, 90, 960, 329, 859};
+        //17220
+
+//        int[] kN = new int[]{449, 792, 564, 261, 584, 798, 514, 616};
+//        2, 10, 25120
+
+//        int[] kN = new int[]{452, 305, 314, 443, 826, 163, 433, 51, 372};
+//        7,10,8260
+
+//        int[] kN = new int[]{12, 34, 67, 90};
+//        2, 113
+
+//        int[] kN = new int[]{73, 58, 30, 72, 44, 78, 23, 9};
+//        5,110
+
+//        int[] kN = new int[]{87, 3, 27, 29, 40, 12, 3, 69, 9, 57, 60, 33, 99};
+//        3,192
+
+//        int[] kN = new int[]{97, 26, 12, 67, 10, 33, 79, 49, 79, 21, 67, 72, 93, 36, 85, 45, 28, 91, 94, 57, 1, 53, 8, 44, 68, 90, 24};
+//        26, 97
+
+        int[] kN = new int[]{2,3,3};
+
+        ArrayList<Integer> kNAr = new ArrayList<Integer>();
+        for (int i : kN) {
+            kNAr.add(i);
+        }
+//        System.out.println(books(kNAr,26));
+        int[] kNLoc = new int[]{2,1,4,1,2,2,5};
+        ArrayList<ArrayList<Integer>> k =new ArrayList<ArrayList<Integer>>();
+        for (int i : kNLoc) {
+            ArrayList<Integer> loc = new ArrayList<Integer>();
+            loc.add(i);
+            k.add(loc);
         }
 
-//        int[] k1a=new int[]{1, 2, 3, 4};
-//        int[] k2a=new int[]{10, 2, 6, 14};
-        int[] k1a = new int[]{1, 2, 3};
-//        int[] k2a = new int[]{4, 0, 2, 1, 3};
-        int[] k2a = new int[]{0, 2, 3, 4, 5, 7, 8, 9};
-//        int[] k2a = new int[]{0, 1, 3, 4, 6, 7, 8};
 
-        ArrayList<Integer> k1 = new ArrayList<Integer>();
-        for (int i : k1a) {
-            k1.add(i);
+        System.out.println(new App().findMedian(k));
+    }
+    public int numLessThankS(ArrayList<Integer> A,int k){
+        int low=0;
+        int high=A.size()-1;
+        int ans=-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int midVal=A.get(mid);
+            if(midVal<=k ){
+                if(mid==0 && midVal==k){
+                    ans=-1;
+                    break;
+                }
+                if( mid!=A.size()-1 && A.get(mid+1)>=k){
+                    ans=mid;
+                    break;
+                }
+                if( midVal<=k && mid==A.size()-1){
+                    ans=mid;
+                    break;
+                }
+                low=mid+1;
+            }else{
+                high=mid-1;
+            }
+        }
+        return ans+1;
+    }
+    public int numLessThanK2(ArrayList<ArrayList<Integer>> A,int k){
+        int count =0;
+        for(ArrayList<Integer> row:A){
+            count+=numLessThankS(row,k);
+        }
+        return count;
+    }
+
+    public int findK(ArrayList<Integer> A,int k){
+        int low=0;
+        int high=A.size()-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int midVal=A.get(mid);
+            if(midVal==k ){
+                return midVal;
+            }else if(midVal<k){
+                low=mid+1;
+            }else{
+                if(mid!=0 && A.get(mid-1)<k){
+                    return midVal;
+                }
+                high=mid-1;
+            }
+        }
+        if(k<A.get(0)){
+            return A.get(0);
+        }
+        return Integer.MIN_VALUE;
+    }
+
+    public int ifKThenKElseMoreThanK(ArrayList<ArrayList<Integer>> A,int k){
+        int found =Integer.MAX_VALUE;
+        for(ArrayList<Integer> row:A){
+            int foundLocal=findK(row,k);
+            if(foundLocal==k){
+                return k;
+            }
+
+            if(foundLocal>Integer.MIN_VALUE && foundLocal<found){
+                found=foundLocal;
+            }
+        }
+        return found;
+    }
+
+    public int findMedian(ArrayList<ArrayList<Integer>> A) {
+        if(A==null ||A.size()==0 || A.get(0).size()==0){
+            return -1;
+        }
+        int rowNum=A.size();
+        int colNum=A.get(0).size();
+        int target=rowNum*colNum/2;
+
+        int low=Integer.MAX_VALUE;
+        int high=Integer.MIN_VALUE;
+        for(int i=0;i<rowNum;i++){
+            if(A.get(i).get(0)<low){
+                low=A.get(i).get(0);
+            }
+            if(A.get(i).get(colNum-1)>high){
+                high=A.get(i).get(colNum-1);
+            }
         }
 
-        ArrayList<Integer> k2 = new ArrayList<Integer>();
-        for (int i : k2a) {
-            k2.add(i);
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int count=numLessThanK2(A,mid);
+            if(count==target){
+                //check if mid is part of array, else elem just bigger than array
+                return ifKThenKElseMoreThanK(A,mid);
+            }else if(count<target){
+                low=mid+1;
+            }else{
+                high=mid-1;
+            }
         }
 
-        double kint = 8.000;
-        double integer = (double) ((int) 8.9);
-        if (kint - ((int) kint) == 0) {
-            System.out.println(true);
+        return A.get(rowNum/2).get(colNum/2);
+    }
+
+    public static long isPossible(ArrayList<Integer> books,int B, long taken){
+
+        long sumTillNow=0;
+        long max=Long.MIN_VALUE;
+        for(int i=0;i<books.size();i++){
+            if(sumTillNow+books.get(i)<=taken){
+                sumTillNow+=books.get(i);
+                if(sumTillNow>max){
+                    max=sumTillNow;
+                }
+            }else {
+                sumTillNow=0;
+                B--;
+                i--;
+            }
+            if(B==0 && i<books.size()){
+                return Long.MIN_VALUE;
+            }
+
+        }
+        if(B==1 && sumTillNow<=taken){
+            if(sumTillNow>max){
+                max=sumTillNow;
+            }
+            return max;
+        }
+        return Long.MAX_VALUE;
+    }
+    public static int books(ArrayList<Integer> A, int B) {
+
+        if(B>A.size()){
+            return -1;
         }
 
-//        System.out.println(reverse(-1024332960));
-//        arrange(k2);
-//        System.out.println(findRank("cab"));
-//        System.out.println(findRank("acb"));
-        System.out.println(solve(k2,5,86587));
-//        System.out.println(solve(k2,5,36321));
-//        3885
+        ArrayList<Long> sum=new ArrayList<Long> ();
+        long sumTN=0;
+        long max=Long.MIN_VALUE;
+        for(Integer c:A){
+            sumTN+=c;
+            sum.add(sumTN);
+            if(c>max){
+                max=c;
+            }
+        }
+
+        if(B==A.size()){
+            return (int)max;
+        }
+
+        long low=sum.get(0);
+        long high=sum.get(A.size()-B);
+        long min=Long.MAX_VALUE;
+        while(low<=high){
+            long mid=low+(high-low)/2;
+            long possib=isPossible(A,B,mid);
+            if(possib>Long.MIN_VALUE && possib<Long.MAX_VALUE){
+                if(possib<min){
+                    min=possib;
+                }
+                high=mid-1;
+//                return (int) possib;
+            }else if(possib==Long.MIN_VALUE ){
+                low=mid+1;
+            }else {
+                high=mid-1;
+            }
+        }
+        return (int)min;
+    }
+
+    public static int paint(int A, int B, ArrayList<Integer> C) {
+
+        if(A>C.size()){
+            A=C.size();
+        }
+
+        ArrayList<Long> sums=new ArrayList<Long> ();
+        long sumTillNow=0;
+        long sumMax=0;
+        int modBase=10000003;
+        int maxTillNow=0;
+
+        for(Integer i:C){
+            sumTillNow+=i;
+            sums.add(sumTillNow);
+            if(sumTillNow>sumMax){
+                sumMax=sumTillNow;
+            }
+            if(i>maxTillNow){
+                maxTillNow=i;
+            }
+        }
+
+        if(A==1){
+            return (int)(((sumMax%modBase)*B)%modBase);
+        }
+        if(A==C.size()){
+            return (int)(((maxTillNow%modBase)*B)%modBase);
+        }
+
+        long maxTimeTaken=Long.MIN_VALUE;
+        long sumGone=0;
+        int lowPrev=-1;
+        long targetSum=(sumMax)/A;
+        for(int i=A;i>0;i--){
+
+            int low=lowPrev+1;
+            int high=sums.size()-1;
+            int index=-1;
+            while(low<=high && i!=1){
+                int mid=low+(high-low)/2;
+                long sumTobe=sums.get(mid) -sumGone ;
+                if(sumTobe==targetSum){
+                    index=mid;
+                    break;
+                }else if(mid!=sums.size()-1 &&
+                        sums.get(mid)-sumGone<targetSum && targetSum<sums.get(mid+1)-sumGone){
+                    index=mid;
+                    if(Math.abs(targetSum -sums.get(mid))>Math.abs(sums.get(mid+1)-targetSum)){
+                        index=mid+1;
+                    }
+                    break;
+                }else if(sumTobe <targetSum){
+                    low=mid+1;
+                }else{
+                    high=mid-1;
+                }
+            }
+
+            if (index<0){
+                index=lowPrev+1;
+            }
+            long sum=sums.get(index);
+            if(i==1){
+             sum=sums.get(sums.size()-1);
+            }
+            if( ((((sum-sumGone)%modBase)*B)%modBase)>maxTimeTaken){
+                maxTimeTaken=((((sum-sumGone)%modBase)*B)%modBase);
+            }
+            sumGone=sum;
+            lowPrev=index;
+        }
+
+        return (int)(maxTimeTaken%modBase);
+
+    }
+
+    public static ArrayList<Integer> searchRange(final List<Integer> a, int b) {
+        int low=0;
+        int high=a.size()-1;
+
+        boolean LI=false;
+        int lIndex=-1;
+        boolean HI=false;
+        int hIndex=-1;
+
+        ArrayList<Integer> res=new ArrayList<Integer>();
+
+        while(low<=high){
+            int midLI=low+(high-low)/2;
+            if(a.get(midLI)==b && (midLI==0 || a.get(midLI-1)!=b)){
+                LI=true;
+                lIndex=midLI;
+                break;
+            }else if(a.get(midLI)>b ||
+                    (a.get(midLI)==b && midLI!=0 && a.get(midLI-1)==b)){
+                high=midLI-1;
+            }else{
+                low=midLI+1;
+            }
+        }
+        if(!LI){
+            res.add(lIndex);
+            res.add(hIndex);
+            return res;
+        }
+        low=lIndex;
+        high=a.size()-1;
+
+        while(low<=high){
+            int midLI=low+(high-low)/2;
+            if(a.get(midLI)==b && (midLI==a.size()-1 || a.get(midLI+1)!=b)){
+                HI=true;
+                hIndex=midLI;
+                break;
+            }else if(a.get(midLI)<b ||
+                    (a.get(midLI)==b && midLI!=a.size()-1 && a.get(midLI+1)==b )){
+                low=midLI+1;
+            }else{
+                high=midLI-1;
+            }
+        }
+
+        res.add(lIndex);
+        res.add(hIndex);
+        return res;
+
+    }
+
+    public int searchMatrix(ArrayList<ArrayList<Integer>> a, int b) {
+
+        if(a==null || a.size()==0 || a.get(0).size()==0){
+            return 0;
+        }
+        int rowMax=a.size();
+        int colMax=a.get(0).size();
+        int colMin=0;
+        int rowMin=0;
+        //edges
+
+        //find closestLow in first row
+        int low=rowMin;int high=rowMax;
+        int targRow=-1,targCol=-1;
+        //find target row,col
+        while(low<=high){
+            int midRow=low+(high-low)/2;
+            if(a.get(midRow).get(colMin)<=b && a.get(midRow).get(colMax)>=b){
+                targRow=midRow;
+                break;
+            }else if(a.get(midRow).get(0)>b){
+                //less
+                high=midRow-1;
+            }else if(a.get(midRow).get(colMax)<b){
+                //more
+                low=midRow+1;
+            }
+        }
+        if(targRow==-1){
+            return 0;
+        }
+
+        low=colMin;
+        high=colMax;
+
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int midVal=a.get(targRow).get(mid);
+            if(midVal==b){
+                targCol=mid;
+                break;
+            }else if(midVal<b){
+                    low=mid+1;
+	            }else{
+                high=mid-1;
+            }
+        }
+        if(targCol>=0){
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public static int pow(int x, int n, int d) {
+        if(n==0){
+            if(x==0){
+                return 0;
+            }
+            return 1;
+        }
+
+        //        x=x%d;
+
+        long res=Math.abs(x);
+        long extra=1;
+        long sign=1;
+
+        if(n%2==1){
+            n=n-1;
+            if(x<0){
+                sign=-1;
+            }
+            extra=res;
+        }
+
+
+        while(n>1){
+            res=((res%d)*(res%d))%d;
+            n=n/2;
+        }
+        res=((res%d)*(extra%d))%d;
+        int ans=(int)(sign*res);
+
+        if(ans<0){
+            return ans+d;
+        }
+        return ans;
+    }
+
+    public static int sqrt(int a) {
+
+        if(a==0){
+            return a;
+        }
+
+        long prev=1;
+        long curr=2;
+        while(curr*curr <a){
+            prev=curr;
+            curr *=2;
+        }
+
+        //bin search
+        while(prev<curr){
+            //edges
+            if(prev*prev<=a && (prev+1)*(prev+1)>a){
+                return (int)prev;
+            }
+            if(curr*curr==a){
+                return (int)curr;
+            }
+            if(curr*curr<a && (curr-1)*(curr-1)>a){
+                return (int)curr-1;
+            }
+
+            long mid= prev+(curr-prev)/2;
+
+            if(mid*mid>a && (mid-1)*(mid-1)<=a) {
+                return (int) mid-1;
+            }
+            if(mid*mid<=a && (mid+1)*(mid+1)>a){
+                return (int)mid;
+            }
+            if((mid+1)*(mid+1)==a){
+                return (int)mid+1;
+            }
+
+            if(mid*mid<a){
+                prev=mid+1;
+            }else{
+                curr=mid-1;
+            }
+        }
+        return -1;
+    }
+
+    public static HashMap<Character,Integer> uniqNumLessThan(List<Character> list,char k){
+        HashMap<Character,Integer> uniq=new HashMap<Character,Integer> ();
+        for(Character c:list){
+            if(c.equals(k)){
+                break;
+            }
+            if(uniq.containsKey(c)){
+                uniq.put(c,uniq.get(c)+1);
+            }else{
+                uniq.put(c,1);
+            }
+        }
+        return uniq;
+    }
+
+    public static int nFact(int k){
+        if(k==0){
+            return 0;
+        }
+        int modBase=1000003;
+
+        int fact=1;
+        for(int i=2;i<=k;i++){
+            fact= ((fact%modBase)*i)%modBase;
+        }
+        return fact%modBase;
+    }
+
+    public static int modInverse(int a, int m)
+    {
+        a = a % m;
+        for (int x = 1; x < m; x++)
+            if ((a * x) % m == 1)
+                return x;
+        return 1;
+    }
+
+    public static int findRankRep(String A) {
+        if(A==null || A.length()<=1){
+            return 1;
+        }
+
+        List<Character> orig=new LinkedList<Character> ();
+        List<Character> sorted=new LinkedList<Character> ();
+        HashMap<Character,Integer> counts=new HashMap<Character,Integer>();
+        for(char c:A.toCharArray()){
+            orig.add(c);
+            sorted.add(c);
+            if(counts.containsKey(c)){
+                counts.put(c,counts.get(c)+1);
+            }else {
+                counts.put(c,1);
+            }
+        }
+        Collections.sort(sorted);
+        long res=0;
+        int modBase=1000003;
+
+        for(int i=0;i<orig.size();i++){
+            if(orig.get(i)==sorted.get(i)){
+                if(counts.get(orig.get(i))==1){
+                    counts.remove(orig.get(i));
+                }else {
+                    counts.put(orig.get(i),counts.get(orig.get(i))-1);
+                }
+                orig.remove(i);
+                sorted.remove(i);
+                i--;
+            }else{
+                int indexSorted=sorted.indexOf(orig.get(i));
+                HashMap<Character,Integer> uniq=uniqNumLessThan(sorted,orig.get(i));
+                int numLessThanChar=indexSorted;
+                int restPossib=nFact(orig.size()-1);
+                int div=1;
+
+                for(Map.Entry<Character,Integer> e:counts.entrySet()){
+
+                    div=((div%modBase)*(nFact(e.getValue())%modBase))%modBase;
+                }
+
+                int divMod=modInverse(div ,modBase ) % modBase;
+
+                res = (res + (((numLessThanChar * restPossib%modBase)*divMod%modBase))%modBase )%modBase;
+
+                if(counts.get(orig.get(i))==1){
+                    counts.remove(orig.get(i));
+                }else {
+                    counts.put(orig.get(i),counts.get(orig.get(i))-1);
+                }
+
+                orig.remove(i);
+                sorted.remove(indexSorted);
+                i--;
+
+            }
+        }
+        return ((int)res%modBase+1)%modBase;
+    }
+
+    public static int gcd(int A,int B){
+        if(A==1 || B==1){
+            return 1;
+        }
+
+        if(A<B){
+            int tmp=A;
+            A=B;
+            B=tmp;
+        }
+        if(A%B==0){
+            return B;
+        }
+
+        return gcd(A%B,B);
+
+
+    }
+    public static int cpFact(int A, int B) {
+
+        int gcdAB=gcd(A,B);
+
+        if(gcdAB==1){
+            return A;
+        }
+
+        return cpFact(A/gcdAB,B);
+
     }
 
     public static int numLessThanK(ArrayList<Integer> A, int k){
@@ -361,17 +927,6 @@ public class App {
             }
         }
         return count;
-    }
-
-    public static int factorial(int a){
-        if(a==0){
-            return 0;
-        }
-        int res=1;
-        for(int i=a;i>1;i--){
-            res= res*i;
-        }
-        return res;
     }
 
     public static int solve(ArrayList<Integer> A, int B, int C) {
@@ -394,9 +949,9 @@ public class App {
         for(int i=B;i>0;i--){
             int msd=C/(int)Math.pow(10,i-1);
             int numLessThanMsdCount=numLessThanK(A,msd);
-            if(numLessThanMsdCount==0){
-                break;
-            }
+//            if(numLessThanMsdCount==0){
+//                break;
+//            }
             if(A.indexOf(0)>=0){
                 if(B!=1 && i==B){
                     res+= (numLessThanMsdCount-1)*Math.pow(A.size(),i-1);
@@ -406,6 +961,9 @@ public class App {
 
             }else{
                 res+= (numLessThanMsdCount)*Math.pow(A.size(),i-1);
+            }
+            if(A.indexOf(msd)<0){
+                break;
             }
             C = C%((int)Math.pow(10,i-1));
         }
@@ -479,32 +1037,6 @@ public class App {
             a.set(i, index % len);
         }
 
-    }
-
-    public int hammingDistance(final List<Integer> Arr) {
-        if (Arr == null || Arr.size() == 0) {
-            return 0;
-        }
-        long allDist = 0;
-        ArrayList<Integer> A = new ArrayList<Integer>(Arr);
-        int modBase = 1000000007;
-        for (int i = 0; i < 33; i++) {
-            long ones = 0;
-            long zero = 0;
-            for (int j = 0; j < A.size(); j++) {
-                int rem = A.get(j) % 2;
-                if (rem == 1) {
-                    ones++;
-                } else {
-                    zero++;
-                }
-                A.set(j, (A.get(j)) / 2);
-            }
-            allDist = Math.floorMod(allDist, modBase) +
-                    2 * Math.floorMod((Math.floorMod(ones, modBase) * Math.floorMod(zero, modBase)), modBase);
-            allDist = Math.floorMod(allDist, modBase);
-        }
-        return (int) allDist;
     }
 
     public static int reverse(int A) {
