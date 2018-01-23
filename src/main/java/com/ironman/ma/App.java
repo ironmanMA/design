@@ -423,6 +423,15 @@ public class App {
         }
         int rowNum=A.size();
         int colNum=A.get(0).size();
+        if(colNum==1){
+            for(int i=1;i<rowNum;i++){
+                int a=A.get(1).get(0);
+                A.get(0).add(a);
+                A.remove(1);
+            }
+            colNum=A.get(0).size();
+            rowNum=A.size();
+        }
         int target=rowNum*colNum/2;
 
         int low=Integer.MAX_VALUE;
@@ -435,6 +444,7 @@ public class App {
                 high=A.get(i).get(colNum-1);
             }
         }
+
 
         while(low<=high){
             int mid=low+(high-low)/2;
