@@ -398,4 +398,306 @@ public class Solution {
 
     }
 
+    public int cntBits(ArrayList<Integer> A) {
+        if (A == null || A.size() == 0) {
+            return 0;
+        }
+        long res = 0;
+        long mod = 1000000007;
+        int count = 0;
+        while (count < 32) {
+            count++;
+            long onez = 0, zeroz = 0;
+            for (int i = 0; i < A.size(); i++) {
+                int local = A.get(i);
+                if ((local & 1) == 1) {
+                    onez++;
+                } else {
+                    zeroz++;
+                }
+                local = local >> 1;
+                A.set(i, local);
+            }
+            res = (res + ((onez * zeroz) % mod + (onez * zeroz) % mod) % mod) % mod;
+        }
+
+        return (int) (res % mod);
+    }
+
+    public int divide(int A, int B) {
+        if (B == 0) {
+            return Integer.MAX_VALUE;
+        }
+
+        int count = 0;
+        int mul = 1;
+        int div = 0;
+
+        if ((A < 0 && B > 0)
+                || (A > 0 && B < 0)) {
+            mul = -1;
+        }
+        A = Math.abs(A);
+        if (A < 0) {
+            A = Integer.MAX_VALUE;
+        }
+        B = Math.abs(B);
+
+        if (B == 1) {
+            if (mul < 0) {
+                return 0 - A;
+            }
+            if (A < 0) {
+                return Integer.MAX_VALUE;
+            } else {
+                return A;
+            }
+        }
+
+        int jockey = (B << count);
+        while (jockey - A <= 0) {
+            count++;
+            jockey = (B << count);
+        }
+
+        count = count - 1;
+        while (count >= 0) {
+            if (A >= (B << count)) {
+                div += 1 << (count);
+                A -= (B << count);
+            }
+            count--;
+        }
+        if (mul < 0) {
+            return 0 - div;
+        }
+        return div;
+    }
+
+    public void merge(ArrayList<Integer> a, ArrayList<Integer> b) {
+        int aIndex = 0, bIndex = 0;
+        while (aIndex < a.size() || bIndex < b.size()) {
+            if (bIndex == b.size()) {
+                break;
+            }
+            if (aIndex == a.size()) {
+                while (bIndex < b.size()) {
+                    a.add(b.get(bIndex));
+                    bIndex++;
+                }
+                break;
+            }
+            if (a.get(aIndex) >= b.get(bIndex)) {
+                a.add(aIndex, b.get(bIndex));
+                bIndex++;
+            } else {
+                aIndex++;
+            }
+        }
+
+        System.out.println(a);
+        return;
+    }
+
+    public int removeDuplicates(ArrayList<Integer> a) {
+        int indexA = 1;
+        int prev = a.get(0);
+        int seen = 1;
+        int start = indexA;
+        int end = indexA;
+        while (indexA < a.size()) {
+            if (a.get(indexA) == prev) {
+                if (seen >= 2) {
+                    end++;
+                } else {
+                    start++;
+                }
+                indexA++;
+                seen++;
+            } else {
+                if (seen > 2) {
+                    a.subList(start, end + 1).clear();
+                }
+                indexA = start + 1;
+                prev = a.get(indexA - 1);
+                seen = 1;
+                start = indexA;
+                end = indexA;
+            }
+        }
+        if (end + 1 <= a.size()) {
+            a.subList(start, end + 1).clear();
+        }
+        System.out.println(a);
+        return a.size();
+    }
+
+    public int removeElementOld(ArrayList<Integer> a, int b) {
+        int start = Integer.MAX_VALUE;
+        int end = Integer.MIN_VALUE;
+        int indexA = 0;
+        while (indexA < a.size()) {
+            if (a.get(indexA) == b) {
+                start = Math.min(indexA, start);
+                end = Math.max(indexA, end);
+            } else {
+                if (start != Integer.MAX_VALUE && end != Integer.MIN_VALUE) {
+                    a.subList(start, end + 1).clear();
+                    indexA = start;
+                    start = Integer.MAX_VALUE;
+                    end = Integer.MIN_VALUE;
+                }
+            }
+            indexA++;
+        }
+        if (end + 1 <= a.size() && start != Integer.MAX_VALUE && end != Integer.MIN_VALUE) {
+            a.subList(start, end + 1).clear();
+        }
+        System.out.println(a);
+        return a.size();
+    }
+
+    public int removeElement(ArrayList<Integer> a, int b) {
+        int start = Integer.MAX_VALUE;
+        int end = Integer.MIN_VALUE;
+        int indexA = 0;
+        while (indexA < a.size()) {
+            if (a.get(indexA) == b) {
+                start = Math.min(indexA, start);
+                end = Math.max(indexA, end);
+            } else {
+                if (start != Integer.MAX_VALUE && end != Integer.MIN_VALUE) {
+                    int tmp = a.get(start);
+                    a.set(start, a.get(indexA));
+                    a.set(indexA, tmp);
+                    start++;
+                    end++;
+                }
+            }
+            indexA++;
+        }
+        System.out.println(a);
+        return Math.min(indexA, start);
+    }
+
+    public int twoSumClosest(ArrayList<Integer> A, int B, int indexC1) {
+        int iterA = 0;
+        int iterB = A.size() - 1;
+        int closeSum = A.get(iterA) + A.get(iterB);
+        int lowest = Integer.MAX_VALUE;
+        while (iterA < A.size() && iterB >= 0) {
+            int sum = A.get(iterA) + A.get(iterB);
+            if (Math.abs(sum - B) < lowest
+                    && iterA != iterB && iterA != indexC1 && iterB != indexC1) {
+                lowest = Math.abs(sum - B);
+                closeSum = sum;
+            }
+            if (sum == B
+                    && iterA != iterB && iterA != indexC1 && iterB != indexC1) {
+                return sum;
+            } else if (sum < B) {
+                iterA++;
+            } else {
+                iterB--;
+            }
+        }
+        return closeSum;
+    }
+
+    public int threeSumClosest(ArrayList<Integer> A, int B) {
+        Collections.sort(A);
+        int lowestDistTillNow = Integer.MAX_VALUE;
+        int sum = 0;
+        for (int i = 0; i < A.size(); i++) {
+            int cand1 = A.get(i);
+            int closestToFind = twoSumClosest(A, B - cand1, i);
+            if (Math.abs(cand1 + closestToFind - B) < Math.abs(lowestDistTillNow)) {
+                lowestDistTillNow = Math.abs(cand1 + closestToFind - B);
+                sum = (cand1 + closestToFind);
+            }
+        }
+        return sum;
+    }
+
+    public int nTriang(ArrayList<Integer> A) {
+        long count = 0;
+        long modBase = 1000000009;
+        Collections.sort(A);
+        for (int s1 = 0; s1 <= A.size() - 3; s1++) {
+            int l1 = A.get(s1);
+            int s2 = s1 + 1;
+            int s3 = s2 + 1;
+            while (s2 < A.size() - 1 && s3 < A.size()) {
+                int l2 = A.get(s2);
+                int l3 = A.get(s3);
+                if (l1 + l2 > l3) {
+                    count = (count % modBase + 1) % modBase;
+                    if (s2 < s3 - 1) {
+                        s2++;
+                    } else {
+                        s3++;
+                    }
+                    System.out.println(l1 + ", " + l2 + ", " + l3);
+                } else {
+                    s2++;
+                    if (s2 == s3) {
+                        s3++;
+                    }
+                }
+            }
+        }
+        return (int) (count % modBase);
+    }
+
+    public int nTriangNew(ArrayList<Integer> A) {
+        long count = 0;
+        long modBase = 1000000009;
+        Collections.sort(A);
+        long n = A.size();
+        for (long i = 0; i < n - 2; ++i) {
+            long k = i + 2;
+            for (long j = i + 1; j < n; ++j) {
+                while (k < n && A.get((int) i) + A.get((int) j) > A.get((int) k)) {
+                    ++k;
+                }
+                count = (count + k - j - 1)%modBase;
+            }
+        }
+        return (int) (count % modBase);
+    }
+
+    public ArrayList<Integer> maxone(ArrayList<Integer> A, int B) {
+        int maxOnes=Integer.MIN_VALUE;
+        int maxi=0,maxj=0;
+        int c0=0;
+        int i=0;int j=0;
+        while(j<A.size() && i<A.size() && A.size()-i>maxOnes){
+            while(c0<=B && j<A.size()){
+                if(A.get(j)==0){
+                    c0++;
+                }
+                j++;
+            }
+            c0--;
+            if(j!=A.size())
+                j--;
+            //max zeros found
+            if(j-i>maxOnes && c0<=B){
+                maxOnes=(j-i);
+                maxi=i;
+                maxj=j;
+            }
+            while(i<A.size() && A.get(i)!=0){
+                i++;
+            }
+            i++;
+            c0--;
+        }
+        ArrayList<Integer> res=new ArrayList<Integer>();
+        for(int k=maxi;k<maxj;k++){
+            res.add(k);
+        }
+        return res;
+    }
+
 }
