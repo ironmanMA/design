@@ -5,7 +5,8 @@ import java.util.*;
 
 public class Solution {
     static TreeMap<String, ArrayList<Long>> mapBuyBook = new TreeMap<String, ArrayList<Long>>();
-    static TreeMap<String, ArrayList<Long>> mapBuySell = new TreeMap<String, ArrayList<Long>>();
+    static TreeMap<String, ArrayList<Long>> mapSellBook = new TreeMap<String, ArrayList<Long>>();
+    static TreeSet<String> mapBook = new TreeSet<String>();
     static HashMap<Long, Order> orderTable = new HashMap<Long, Order>();
     static HashMap<Long, Order> cancelledOrderTable = new HashMap<Long, Order>();
 
@@ -26,7 +27,7 @@ public class Solution {
     static String[] processQueries(String[] queries) {
         LinkedList<String> ansList = new LinkedList<String>();
         // Write your code here.
-        long prevTs = Long.MAX_VALUE;
+        long prevTs = Long.MIN_VALUE;
         for (String command : queries) {
             String[] commandForm = command.split(",");
             if (commandForm[0].equals("N")) {
@@ -40,6 +41,12 @@ public class Solution {
                 order.timestampStr = commandForm[2];
                 order.symbol = commandForm[3];
                 order.type = commandForm[4];
+                if (!(order.type.equals("M")
+                        || order.type.equals("L")
+                        || order.type.equals("I"))) {
+                    ansList.add(order.id + " - Reject - 303 - Invalid order details");
+                    continue;
+                }
                 order.side = commandForm[5];
                 order.price = Float.parseFloat(commandForm[6]);
                 if (commandForm[7].indexOf(".") > 0 || order.price < 0) {
@@ -56,7 +63,7 @@ public class Solution {
                     ansList.add(order.id + " - Reject - 303 - Invalid order details");
                     continue;
                 }
-                orderTable.put(order.id, order);
+
                 if (order.side.equals("B")) {
                     ArrayList<Long> idList = new ArrayList<Long>();
                     if (mapBuyBook.containsKey(order.symbol)) {
@@ -64,14 +71,19 @@ public class Solution {
                     }
                     idList.add(order.id);
                     mapBuyBook.put(order.symbol, idList);
-                } else {
+                } else if (order.side.equals("S")) {
                     ArrayList<Long> idList = new ArrayList<Long>();
-                    if (mapBuySell.containsKey(order.symbol)) {
-                        idList = mapBuySell.get(order.symbol);
+                    if (mapSellBook.containsKey(order.symbol)) {
+                        idList = mapSellBook.get(order.symbol);
                     }
                     idList.add(order.id);
-                    mapBuySell.put(order.symbol, idList);
+                    mapSellBook.put(order.symbol, idList);
+                } else {
+                    ansList.add(order.id + " - Reject - 303 - Invalid order details");
+                    continue;
                 }
+                orderTable.put(order.id, order);
+                mapBook.add(order.symbol);
                 ansList.add(order.id + " - Accept");
                 prevTs = order.timestamp;
 
@@ -136,15 +148,70 @@ public class Solution {
             } else if (commandForm[0].equals("M")) {
 
             } else if (commandForm[0].equals("Q")) {
+                long time = Long.MAX_VALUE;
+                ArrayList<String> symbolList = new ArrayList<String>(mapBook);
+                for (String s : commandForm) {
+                    if (isNumeric(s)) {
+                        time = Long.parseLong(s);
+                    } else {
+                        symbolList = new ArrayList<String>();
+                        symbolList.add(s);
+                    }
+                }
+                ArrayList<Long> sells = new ArrayList<Long>();
+                ArrayList<Long> buys = new ArrayList<Long>();
 
+                int iterBuy = 0;
+                int iterSell = 0;
+                for (String symbolCand : symbolList) {
+                    iterBuy = 0;
+                    iterSell = 0;
+
+                    if (mapBuyBook.containsKey(symbolCand)) {
+                        buys = mapBuyBook.get(symbolCand);
+                    }
+                    if (mapSellBook.containsKey(symbolCand)) {
+                        sells = mapSellBook.get(symbolCand);
+                    }
+                    while (iterBuy < buys.size() || iterSell < sells.size()) {
+                        String buyPart = "";
+                        String sellPart = "";
+                        String full = symbolCand;
+                        if (iterBuy < buys.size()) {
+                            Order buy = orderTable.get(buys.get(iterBuy));
+                            if (buy.timestamp < time) {
+                                buyPart = buy.id + "," + buy.type + "," + buy.quantity + "," + buy.price;
+                            }
+                            iterBuy++;
+                        }
+                        if (iterSell < sells.size()) {
+                            Order sell = orderTable.get(sells.get(iterSell));
+                            if (sell.timestamp < time) {
+                                sellPart = sell.price + "," + sell.quantity + "," + sell.type + "," + sell.id;
+                            }
+                            iterSell++;
+                        }
+                        if (buyPart.isEmpty() && sellPart.isEmpty()) {
+                            break;
+                        }
+                        full = full + "|" + buyPart + "|" + sellPart;
+                        ansList.add(full);
+                    }
+                }
             }
-
         }
-        String[] ans = new String[0];
-
-        return ans;
+        String[] ansArr = new String[ansList.size()];
+        int ansIter = 0;
+        for (String ans : ansList) {
+            ansArr[ansIter] = ans;
+            ansIter++;
+        }
+        return ansArr;
     }
 
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
 
     private static final Scanner scan = new Scanner(System.in);
 
