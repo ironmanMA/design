@@ -202,7 +202,7 @@ public class Solution {
 
                         if (buy.price >= sell.price || buy.type.equals("M")) {
                             long buyingQuantity = Math.min(buy.quantity, sell.quantity);
-                            float buyingPrice = Math.max(buy.price, sell.price);
+                            float buyingPrice = sell.price;
 
                             buyPart = buy.id + "," + buy.type + "," + buyingQuantity + "," + String.format("%.2f", buyingPrice);
                             sellPart = String.format("%.2f", buyingPrice) + "," + buyingQuantity + "," + sell.type + "," + sell.id;
@@ -230,6 +230,14 @@ public class Solution {
                             break;
                         }
                     }
+                    //remove all IOC orders
+//                    cleanupForIOC
+                    sells = cleanupForIOC(sells);
+                    buys = cleanupForIOC(buys);
+
+                    mapBuyBook.put(symbolCand, buys);
+                    mapSellBook.put(symbolCand, sells);
+
 
                 }
             } else if (commandForm[0].equals("Q")) {
@@ -244,11 +252,9 @@ public class Solution {
                         symbolList.add(s);
                     }
                 }
-                ArrayList<Long> sells = new ArrayList<Long>();
-                ArrayList<Long> buys = new ArrayList<Long>();
-
-
                 for (String symbolCand : symbolList) {
+                    ArrayList<Long> sells = new ArrayList<Long>();
+                    ArrayList<Long> buys = new ArrayList<Long>();
                     int iterBuy = 0;
                     int iterSell = 0;
 
@@ -331,6 +337,18 @@ public class Solution {
         for (Long anArr : arr) {
             if (orderTable.containsKey(anArr)) {
                 res.add(anArr);
+            }
+        }
+        return res;
+    }
+
+    public static ArrayList<Long> cleanupForIOC(ArrayList<Long> arr) {
+        ArrayList<Long> res = new ArrayList<Long>();
+        for (Long anArr : arr) {
+            if (orderTable.containsKey(anArr)) {
+                if (!orderTable.get(anArr).type.equals("I")) {
+                    res.add(anArr);
+                }
             }
         }
         return res;
