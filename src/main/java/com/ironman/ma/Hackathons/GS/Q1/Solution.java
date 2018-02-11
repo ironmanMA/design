@@ -93,17 +93,18 @@ public class Solution {
                 if (orderTable.containsKey(id)) {
                     Order orderFromTable = orderTable.get(id);
                     Order order = new Order();
-                    if (order.timestamp < prevTs) {
+                    order.id = Long.parseLong(commandForm[1]);
+                    if (Long.parseLong(commandForm[2]) < prevTs) {
                         ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
                     }
-                    order.id = Long.parseLong(commandForm[1]);
                     order.timestamp = orderFromTable.timestamp;
                     order.timestampStr = orderFromTable.timestampStr;
                     order.symbol = commandForm[3];
                     order.type = commandForm[4];
                     order.side = commandForm[5];
                     order.price = Float.parseFloat(commandForm[6]);
+
                     if (commandForm[7].indexOf(".") > 0 || order.price < 0) {
                         ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
@@ -114,13 +115,9 @@ public class Solution {
                         continue;
                     }
 
-                    if (orderTable.containsKey(order.id)) {
-                        ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
-                        continue;
-                    }
-                    if (orderFromTable.symbol != order.symbol
-                            || orderFromTable.type != order.type
-                            || orderFromTable.side != order.side) {
+                    if (!orderFromTable.symbol.equals(order.symbol)
+                            || !orderFromTable.type.equals(order.type)
+                            || !orderFromTable.side.equals(order.side)) {
                         ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
                     }
@@ -146,7 +143,7 @@ public class Solution {
                 }
                 if (orderTable.containsKey(id)) {
                     orderTable.remove(id);
-                    ansList.add(id + " – CancelAccept");
+                    ansList.add(id + " - CancelAccept");
                 } else {
                     ansList.add(id + " – CancelReject - 404 - Order does not exist");
                     continue;
