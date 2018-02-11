@@ -382,12 +382,6 @@ public class Solution {
             public int compare(Long order1ID, Long order2ID) {
                 Order bo1 = orderTable.get(order1ID);
                 Order bo2 = orderTable.get(order2ID);
-                if (bo1.type.equals("M")) {
-                    if (bo2.type.equals("M")) {
-                        return (int) (bo1.timestamp - bo2.timestamp);
-                    }
-                    return 1;
-                }
                 if (bo1.price == bo2.price) {
                     return (int) (bo1.timestamp - bo2.timestamp);
                 } else {
@@ -401,8 +395,8 @@ public class Solution {
     private static final Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-//        BufferedWriter bw = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-        BufferedWriter bw = null;
+        BufferedWriter bw = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+//        BufferedWriter bw = null;
         if (bw == null) {
             bw = new BufferedWriter(new OutputStreamWriter(System.out));
         }
