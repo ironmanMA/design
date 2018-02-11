@@ -90,7 +90,6 @@ public class Solution {
 //            System.out.print(ans[k]);
             k++;
         }
-        int[] dk=new int[];
         return ans;
     }
 }
