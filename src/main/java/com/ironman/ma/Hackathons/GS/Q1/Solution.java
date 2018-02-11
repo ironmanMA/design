@@ -150,7 +150,8 @@ public class Solution {
             } else if (commandForm[0].equals("Q")) {
                 long time = Long.MAX_VALUE;
                 ArrayList<String> symbolList = new ArrayList<String>(mapBook);
-                for (String s : commandForm) {
+                for (int i = 1; i < commandForm.length; i++) {
+                    String s = commandForm[i];
                     if (isNumeric(s)) {
                         time = Long.parseLong(s);
                     } else {
@@ -179,15 +180,15 @@ public class Solution {
                         String full = symbolCand;
                         if (iterBuy < buys.size()) {
                             Order buy = orderTable.get(buys.get(iterBuy));
-                            if (buy.timestamp < time) {
-                                buyPart = buy.id + "," + buy.type + "," + buy.quantity + "," + buy.price;
+                            if (buy.timestamp <= time) {
+                                buyPart = buy.id + "," + buy.type + "," + buy.quantity + "," + String.format("%.2f", buy.price);
                             }
                             iterBuy++;
                         }
                         if (iterSell < sells.size()) {
                             Order sell = orderTable.get(sells.get(iterSell));
-                            if (sell.timestamp < time) {
-                                sellPart = sell.price + "," + sell.quantity + "," + sell.type + "," + sell.id;
+                            if (sell.timestamp <= time) {
+                                sellPart = String.format("%.2f", sell.price) + "," + sell.quantity + "," + sell.type + "," + sell.id;
                             }
                             iterSell++;
                         }
