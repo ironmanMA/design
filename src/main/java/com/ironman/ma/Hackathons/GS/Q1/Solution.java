@@ -176,59 +176,15 @@ public class Solution {
                         continue;
                     }
 
-                    //clean up
-                    for (int i = 0; i < sells.size(); i++) {
-                        if (!orderTable.containsKey(sells.get(i))) {
-                            sells.remove(i);
-                            i--;
-                        }
-                    }
-                    for (int i = 0; i < buys.size(); i++) {
-                        if (!orderTable.containsKey(buys.get(i))) {
-                            buys.remove(i);
-                            i--;
-                        }
-                    }
+                    sells = cleanAndSortSell(sells);
+                    buys = cleanAndSortBuy(buys);
+
+                    mapBuyBook.put(symbolCand, buys);
+                    mapSellBook.put(symbolCand, sells);
+
                     if (sells.size() == 0 || buys.size() == 0) {
-                        break;
+                        continue;
                     }
-//                    custom comparator
-                    Collections.sort(buys, new Comparator<Long>() {
-                        public int compare(Long buyOrder1ID, Long buyOrder2ID) {
-                            Order bo1 = orderTable.get(buyOrder1ID);
-                            Order bo2 = orderTable.get(buyOrder2ID);
-                            if (bo1.type.equals("M")) {
-                                if (bo2.type.equals("M")) {
-                                    return (int) (bo1.timestamp - bo2.timestamp);
-                                }
-                                return 1;
-                            }
-                            if (bo1.price == bo2.price) {
-                                return (int) (bo1.timestamp - bo2.timestamp);
-                            } else {
-                                return (int) (bo1.price - bo2.price);
-                            }
-                        }
-                    });
-
-                    Collections.sort(sells, new Comparator<Long>() {
-                        public int compare(Long sellOrder1ID, Long sellOrder2ID) {
-                            Order bo1 = orderTable.get(sellOrder1ID);
-                            Order bo2 = orderTable.get(sellOrder2ID);
-                            if (bo1.type.equals("M")) {
-                                if (bo2.type.equals("M")) {
-                                    return (int) (bo2.timestamp - bo1.timestamp);
-                                }
-                                return -1;
-                            }
-                            if (bo1.price == bo2.price) {
-                                return (int) (bo2.timestamp - bo1.timestamp);
-                            } else {
-                                return (int) (bo2.price - bo1.price);
-                            }
-                        }
-                    });
-
                     int iterBuy = 0;
                     int iterSell = 0;
                     while (iterBuy < buys.size() && iterSell < sells.size()) {
@@ -307,6 +263,20 @@ public class Solution {
                     if (mapSellBook.containsKey(symbolCand)) {
                         sells = mapSellBook.get(symbolCand);
                     }
+
+                    if (buys == null || sells == null) {
+                        continue;
+                    }
+
+                    sells = cleanAndSortSell(sells);
+                    buys = cleanAndSortBuy(buys);
+
+                    mapBuyBook.put(symbolCand, buys);
+                    mapSellBook.put(symbolCand, sells);
+
+                    if (sells.size() == 0 && buys.size() == 0) {
+                        continue;
+                    }
                     while (iterBuy < buys.size() || iterSell < sells.size()) {
                         if (outputCount > 5) {
                             break;
@@ -314,29 +284,31 @@ public class Solution {
                         String buyPart = "";
                         String sellPart = "";
                         String full = symbolCand;
+
                         if (iterBuy < buys.size()) {
                             Order buy = orderTable.get(buys.get(iterBuy));
                             if (buy != null && buy.timestamp <= time) {
                                 buyPart = buy.id + "," + buy.type + "," + buy.quantity + "," + String.format("%.2f", buy.price);
-                            } else if (buy == null) {
-                                buys.remove(iterBuy);
-                                iterBuy--;
+                            } else {
+                                iterBuy++;
+                                continue;
                             }
-                            iterBuy++;
                         }
                         if (iterSell < sells.size()) {
                             Order sell = orderTable.get(sells.get(iterSell));
                             if (sell != null && sell.timestamp <= time) {
                                 sellPart = String.format("%.2f", sell.price) + "," + sell.quantity + "," + sell.type + "," + sell.id;
-                            } else if (sell == null) {
-                                sells.remove(iterSell);
-                                iterSell--;
+                            } else {
+                                iterSell++;
+                                continue;
+
                             }
-                            iterSell++;
                         }
                         if (buyPart.isEmpty() && sellPart.isEmpty()) {
                             break;
                         }
+                        iterBuy++;
+                        iterSell++;
                         full = full + "|" + buyPart + "|" + sellPart;
                         ansList.add(full);
                         outputCount++;
@@ -355,6 +327,60 @@ public class Solution {
 
     public static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
+    public static ArrayList<Long> cleanup(ArrayList<Long> arr) {
+        ArrayList<Long> res = new ArrayList<Long>();
+        for (Long anArr : arr) {
+            if (orderTable.containsKey(anArr)) {
+                res.add(anArr);
+            }
+        }
+        return res;
+    }
+
+    public static ArrayList<Long> cleanAndSortBuy(ArrayList<Long> sellArray) {
+        sellArray = cleanup(sellArray);
+        Collections.sort(sellArray, new Comparator<Long>() {
+            public int compare(Long order1ID, Long order2ID) {
+                Order bo1 = orderTable.get(order1ID);
+                Order bo2 = orderTable.get(order2ID);
+                if (bo1.type.equals("M")) {
+                    if (bo2.type.equals("M")) {
+                        return (int) (bo1.timestamp - bo2.timestamp);
+                    }
+                    return -1;
+                }
+                if (bo1.price == bo2.price) {
+                    return (int) (bo1.timestamp - bo2.timestamp);
+                } else {
+                    return (int) (bo2.price - bo1.price);
+                }
+            }
+        });
+        return sellArray;
+    }
+
+    public static ArrayList<Long> cleanAndSortSell(ArrayList<Long> buyArray) {
+        buyArray = cleanup(buyArray);
+        Collections.sort(buyArray, new Comparator<Long>() {
+            public int compare(Long order1ID, Long order2ID) {
+                Order bo1 = orderTable.get(order1ID);
+                Order bo2 = orderTable.get(order2ID);
+                if (bo1.type.equals("M")) {
+                    if (bo2.type.equals("M")) {
+                        return (int) (bo1.timestamp - bo2.timestamp);
+                    }
+                    return 1;
+                }
+                if (bo1.price == bo2.price) {
+                    return (int) (bo1.timestamp - bo2.timestamp);
+                } else {
+                    return (int) (bo1.price - bo2.price);
+                }
+            }
+        });
+        return buyArray;
     }
 
     private static final Scanner scan = new Scanner(System.in);
