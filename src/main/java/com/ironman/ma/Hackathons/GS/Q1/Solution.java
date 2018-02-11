@@ -8,7 +8,7 @@ public class Solution {
     static TreeMap<String, ArrayList<Long>> mapSellBook = new TreeMap<String, ArrayList<Long>>();
     static TreeSet<String> mapBook = new TreeSet<String>();
     static HashMap<Long, Order> orderTable = new HashMap<Long, Order>();
-    static HashMap<Long, Order> cancelledOrderTable = new HashMap<Long, Order>();
+    static HashMap<Long, Order> CompletedOrderTable = new HashMap<Long, Order>();
 
     static class Order {
         long id;
@@ -17,8 +17,9 @@ public class Solution {
         String symbol;
         String type;
         String side;
-        float price;
-        long quantity;
+        float price = 0;
+        long quantity = 0;
+        long matchedQuantity = 0;
     }
 
     /*
@@ -93,12 +94,12 @@ public class Solution {
                     Order orderFromTable = orderTable.get(id);
                     Order order = new Order();
                     if (order.timestamp < prevTs) {
-                        ansList.add(order.id + " - Reject - 303 - Invalid order details");
+                        ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
                     }
                     order.id = Long.parseLong(commandForm[1]);
-                    order.timestamp = Long.parseLong(commandForm[2]);
-                    order.timestampStr = commandForm[2];
+                    order.timestamp = orderFromTable.timestamp;
+                    order.timestampStr = orderFromTable.timestampStr;
                     order.symbol = commandForm[3];
                     order.type = commandForm[4];
                     order.side = commandForm[5];
@@ -117,16 +118,22 @@ public class Solution {
                         ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
                     }
-                    if (orderFromTable.timestamp != order.timestamp
-                            || orderFromTable.symbol != order.symbol
+                    if (orderFromTable.symbol != order.symbol
                             || orderFromTable.type != order.type
-                            || orderFromTable.side != order.side
-                            || orderFromTable.timestamp != order.timestamp) {
+                            || orderFromTable.side != order.side) {
                         ansList.add(order.id + " - AmendReject - 101 - Invalid amendment details");
                         continue;
                     }
+                    if (orderFromTable.matchedQuantity >= order.quantity) {
+                        //remove this
+                        ansList.add(order.id + " - AmendAccept");
+                        orderTable.remove(order.id);
+                        continue;
+                    }
+                    order.quantity -= orderFromTable.matchedQuantity;
+                    order.matchedQuantity = orderFromTable.matchedQuantity;
                     orderTable.put(order.id, order);
-
+                    ansList.add(order.id + " - AmendAccept");
                 } else {
                     ansList.add(id + " - AmendReject - 404 - Order does not exist");
                 }
@@ -146,7 +153,132 @@ public class Solution {
                 }
                 prevTs = ts;
             } else if (commandForm[0].equals("M")) {
+                long time = Long.MAX_VALUE;
+                ArrayList<String> symbolList = new ArrayList<String>(mapBook);
+                if (commandForm.length > 1) {
+                    time = Long.parseLong(commandForm[1]);
+                }
+                if (commandForm.length > 2) {
+                    symbolList = new ArrayList<String>();
+                    symbolList.add(commandForm[2]);
+                }
+                for (String symbolCand : symbolList) {
+                    ArrayList<Long> sells = new ArrayList<Long>();
+                    ArrayList<Long> buys = new ArrayList<Long>();
+                    if (mapBuyBook.containsKey(symbolCand)) {
+                        buys = mapBuyBook.get(symbolCand);
+                    }
+                    if (mapSellBook.containsKey(symbolCand)) {
+                        sells = mapSellBook.get(symbolCand);
+                    }
 
+                    if (buys == null || sells == null || buys.size() == 0 || sells.size() == 0) {
+                        continue;
+                    }
+
+                    //clean up
+                    for (int i = 0; i < sells.size(); i++) {
+                        if (!orderTable.containsKey(sells.get(i))) {
+                            sells.remove(i);
+                            i--;
+                        }
+                    }
+                    for (int i = 0; i < buys.size(); i++) {
+                        if (!orderTable.containsKey(buys.get(i))) {
+                            buys.remove(i);
+                            i--;
+                        }
+                    }
+                    if (sells.size() == 0 || buys.size() == 0) {
+                        break;
+                    }
+//                    custom comparator
+                    Collections.sort(buys, new Comparator<Long>() {
+                        public int compare(Long buyOrder1ID, Long buyOrder2ID) {
+                            Order bo1 = orderTable.get(buyOrder1ID);
+                            Order bo2 = orderTable.get(buyOrder2ID);
+                            if (bo1.type.equals("M")) {
+                                if (bo2.type.equals("M")) {
+                                    return (int) (bo1.timestamp - bo2.timestamp);
+                                }
+                                return 1;
+                            }
+                            if (bo1.price == bo2.price) {
+                                return (int) (bo1.timestamp - bo2.timestamp);
+                            } else {
+                                return (int) (bo1.price - bo2.price);
+                            }
+                        }
+                    });
+
+                    Collections.sort(sells, new Comparator<Long>() {
+                        public int compare(Long sellOrder1ID, Long sellOrder2ID) {
+                            Order bo1 = orderTable.get(sellOrder1ID);
+                            Order bo2 = orderTable.get(sellOrder2ID);
+                            if (bo1.type.equals("M")) {
+                                if (bo2.type.equals("M")) {
+                                    return (int) (bo2.timestamp - bo1.timestamp);
+                                }
+                                return -1;
+                            }
+                            if (bo1.price == bo2.price) {
+                                return (int) (bo2.timestamp - bo1.timestamp);
+                            } else {
+                                return (int) (bo2.price - bo1.price);
+                            }
+                        }
+                    });
+
+                    int iterBuy = 0;
+                    int iterSell = 0;
+                    while (iterBuy < buys.size() && iterSell < sells.size()) {
+                        String buyPart = "";
+                        String sellPart = "";
+                        String full = symbolCand;
+                        Order buy = orderTable.get(buys.get(iterBuy));
+                        Order sell = orderTable.get(sells.get(iterSell));
+
+                        if (buy.timestamp > time) {
+                            iterBuy++;
+                            continue;
+                        }
+                        if (sell.timestamp > time) {
+                            iterSell++;
+                            continue;
+                        }
+
+                        if (buy.price >= sell.price || buy.type.equals("M")) {
+                            long buyingQuantity = Math.min(buy.quantity, sell.quantity);
+                            float buyingPrice = Math.max(buy.price, sell.price);
+
+                            buyPart = buy.id + "," + buy.type + "," + buyingQuantity + "," + String.format("%.2f", buyingPrice);
+                            sellPart = String.format("%.2f", buyingPrice) + "," + buyingQuantity + "," + sell.type + "," + sell.id;
+                            full = full + "|" + buyPart + "|" + sellPart;
+                            ansList.add(full);
+
+                            if (buy.quantity == buyingQuantity || buy.type.equals("I")) {
+                                orderTable.remove(buys.get(iterBuy));
+                                buys.remove(iterBuy);
+                            } else {
+                                buy.quantity -= buyingQuantity;
+                                buy.matchedQuantity += buyingQuantity;
+                                orderTable.put(buys.get(iterBuy), buy);
+                            }
+
+                            if (sell.quantity == buyingQuantity || sell.type.equals("I")) {
+                                orderTable.remove(sells.get(iterSell));
+                                sells.remove(iterSell);
+                            } else {
+                                sell.quantity -= buyingQuantity;
+                                sell.matchedQuantity += buyingQuantity;
+                                orderTable.put(sells.get(iterSell), sell);
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+
+                }
             } else if (commandForm[0].equals("Q")) {
                 long time = Long.MAX_VALUE;
                 ArrayList<String> symbolList = new ArrayList<String>(mapBook);
@@ -162,11 +294,12 @@ public class Solution {
                 ArrayList<Long> sells = new ArrayList<Long>();
                 ArrayList<Long> buys = new ArrayList<Long>();
 
-                int iterBuy = 0;
-                int iterSell = 0;
+
                 for (String symbolCand : symbolList) {
-                    iterBuy = 0;
-                    iterSell = 0;
+                    int iterBuy = 0;
+                    int iterSell = 0;
+
+                    int outputCount = 0;
 
                     if (mapBuyBook.containsKey(symbolCand)) {
                         buys = mapBuyBook.get(symbolCand);
@@ -175,20 +308,29 @@ public class Solution {
                         sells = mapSellBook.get(symbolCand);
                     }
                     while (iterBuy < buys.size() || iterSell < sells.size()) {
+                        if (outputCount > 5) {
+                            break;
+                        }
                         String buyPart = "";
                         String sellPart = "";
                         String full = symbolCand;
                         if (iterBuy < buys.size()) {
                             Order buy = orderTable.get(buys.get(iterBuy));
-                            if (buy.timestamp <= time) {
+                            if (buy != null && buy.timestamp <= time) {
                                 buyPart = buy.id + "," + buy.type + "," + buy.quantity + "," + String.format("%.2f", buy.price);
+                            } else if (buy == null) {
+                                buys.remove(iterBuy);
+                                iterBuy--;
                             }
                             iterBuy++;
                         }
                         if (iterSell < sells.size()) {
                             Order sell = orderTable.get(sells.get(iterSell));
-                            if (sell.timestamp <= time) {
+                            if (sell != null && sell.timestamp <= time) {
                                 sellPart = String.format("%.2f", sell.price) + "," + sell.quantity + "," + sell.type + "," + sell.id;
+                            } else if (sell == null) {
+                                sells.remove(iterSell);
+                                iterSell--;
                             }
                             iterSell++;
                         }
@@ -197,6 +339,7 @@ public class Solution {
                         }
                         full = full + "|" + buyPart + "|" + sellPart;
                         ansList.add(full);
+                        outputCount++;
                     }
                 }
             }
