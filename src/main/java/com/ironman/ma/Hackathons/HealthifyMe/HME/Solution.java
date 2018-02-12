@@ -4,6 +4,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/*
+    README
+Input
+N - num slots
+Next N lines with slot format below
+Day,startHour:startMin,endHour:endMin
+M - num test cases
+there are 2 test case formats as mentioned below
+K (next k-slots)
+K,startTime (next k-slots starting this time, startTime-format yyyy-MM-dd HH:mm)
+
+    Sample Input
+6
+Monday,06:00,06:30
+Monday,06:30,07:00
+Tuesday,06:00,06:30
+Tuesday,07:00,07:30
+Tuesday,07:30,07:45
+Thursday,09:00,10:00
+2
+11
+10,2018-02-13 08:50
+
+    Sample Output
+
+ */
+
 public class Solution {
 
     private static ArrayList<ArrayList<Slot>> allSlots;
@@ -48,7 +75,7 @@ public class Solution {
         allSlots.get(allSlotId).add(slot);
     }
 
-    private static void prePareForQueries() {
+    private static void prepareForQueries() {
         for (int i = 0; i < allSlots.size(); i++) {
             ArrayList<Slot> weekDaySlots = allSlots.get(i);
             Collections.sort(weekDaySlots, new Comparator<Slot>() {
@@ -65,7 +92,7 @@ public class Solution {
     }
 
     private static void preProcess() {
-        String[] weekDayList = new String[]{"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
+        String[] weekDayList = new String[]{"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
         allSlots = new ArrayList<ArrayList<Slot>>();
         weekDayMap = new HashMap<String, Integer>();
         int iter = 0;
@@ -160,7 +187,7 @@ public class Solution {
             int midSlotId = dates.get(mid).slotStartMinuteID;
             int nextTomidSlotId = Integer.MAX_VALUE;
             if (mid + 1 < dates.size()) {
-                nextTomidSlotId = dates.get(mid).slotStartMinuteID;
+                nextTomidSlotId = dates.get(mid + 1).slotStartMinuteID;
             }
 
             if (midSlotId <= slotId && slotId < nextTomidSlotId) {
@@ -177,24 +204,18 @@ public class Solution {
 
     public static void main(String[] args) throws ParseException {
         preProcess();
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in).useDelimiter("\\n");
         int cases = input.nextInt();
         for (int i = 0; i < cases; i++) {
             String slot = input.next();
             register(slot);
         }
-        prePareForQueries();
+        prepareForQueries();
         int tests = input.nextInt();
         for (int i = 0; i < tests; i++) {
-            String test = input.nextLine();
-            System.out.print(test);
-            if (!test.isEmpty())
-                processQuery(test);
-            else {
-                i--;
-            }
+            String test = input.next();
+            processQuery(test);
         }
     }
-
 
 }
