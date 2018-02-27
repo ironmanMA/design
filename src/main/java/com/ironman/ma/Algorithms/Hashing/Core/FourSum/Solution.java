@@ -333,7 +333,7 @@ public class Solution {
         int winLen = 0;
         int fullLen = 0;
         StringBuilder tarStr = new StringBuilder("");
-        HashMap<String, Integer> mapA=new HashMap<String, Integer> ();
+        HashMap<String, Integer> mapA = new HashMap<String, Integer>();
         for (String word : B) {
             winLen = word.length();
             fullLen += word.length();
@@ -358,8 +358,8 @@ public class Solution {
             for (int j = 0; j <= A.length() - fullLen; j++) {
                 long localHash = 0;
                 for (int i = j; i < j + fullLen; i += winLen) {
-                    String lc=A.substring(i, i + winLen);
-                    if(!mapA.containsKey(lc)){
+                    String lc = A.substring(i, i + winLen);
+                    if (!mapA.containsKey(lc)) {
                         break;
                     }
                     localHash += lc.hashCode();
@@ -372,86 +372,229 @@ public class Solution {
 
         return ans;
     }
+
     public int longestConsecutive(final List<Integer> A) {
-        int maxLen=0;
-        HashMap<Integer,String> maxUp=new HashMap<Integer,String>();
-        for(int a:A){
-            String mapOg=a+","+a;
-            maxUp.put(a,mapOg);
+        int maxLen = 0;
+        HashMap<Integer, String> maxUp = new HashMap<Integer, String>();
+        for (int a : A) {
+            String mapOg = a + "," + a;
+            maxUp.put(a, mapOg);
 
-            int newA=a+1;
-            while(maxUp.containsKey(newA)){
-                String[] maxc=maxUp.get(a).split(",");
-                String[] maxu=maxUp.get(newA).split(",");
+            int newA = a + 1;
+            while (maxUp.containsKey(newA)) {
+                String[] maxc = maxUp.get(a).split(",");
+                String[] maxu = maxUp.get(newA).split(",");
 
-                String newMap= Math.min(Integer.parseInt(maxc[0]),
-                        Integer.parseInt(maxu[0]))+","+
+                String newMap = Math.min(Integer.parseInt(maxc[0]),
+                        Integer.parseInt(maxu[0])) + "," +
                         Math.max(Integer.parseInt(maxc[1]),
                                 Integer.parseInt(maxu[1]));
-                maxUp.put(a,newMap);
-                maxUp.put(newA,newMap);
-                newA=Math.max(Integer.parseInt(maxc[1]),Integer.parseInt(maxu[1]))+1;
+                maxUp.put(a, newMap);
+                maxUp.put(newA, newMap);
+                newA = Math.max(Integer.parseInt(maxc[1]), Integer.parseInt(maxu[1])) + 1;
             }
-            newA=a-1;
-            while(maxUp.containsKey(newA)){
-                String[] maxc=maxUp.get(a).split(",");
-                String[] maxu=maxUp.get(newA).split(",");
+            newA = a - 1;
+            while (maxUp.containsKey(newA)) {
+                String[] maxc = maxUp.get(a).split(",");
+                String[] maxu = maxUp.get(newA).split(",");
 
-                String newMap= Math.min(Integer.parseInt(maxc[0]),
-                        Integer.parseInt(maxu[0]))+","+
+                String newMap = Math.min(Integer.parseInt(maxc[0]),
+                        Integer.parseInt(maxu[0])) + "," +
                         Math.max(Integer.parseInt(maxc[1]),
                                 Integer.parseInt(maxu[1]));
-                maxUp.put(a,newMap);
-                maxUp.put(newA,newMap);
-                newA=Math.min(Integer.parseInt(maxc[0]),Integer.parseInt(maxu[0]))-1;
+                maxUp.put(a, newMap);
+                maxUp.put(newA, newMap);
+                newA = Math.min(Integer.parseInt(maxc[0]), Integer.parseInt(maxu[0])) - 1;
             }
-            int len = 1+Integer.parseInt(maxUp.get(a).split(",")[1])-
+            int len = 1 + Integer.parseInt(maxUp.get(a).split(",")[1]) -
                     Integer.parseInt(maxUp.get(a).split(",")[0]);
-            if(len>maxLen){
-                maxLen=len;
+            if (len > maxLen) {
+                maxLen = len;
             }
         }
         return maxLen;
     }
 
     public ArrayList<Integer> solve(ArrayList<Integer> A, ArrayList<Integer> B) {
-        ArrayList<Integer> ans=new ArrayList<Integer>(A.size());
-        if(A.size()==1){
-            ans.add(A.get(0)+B.get(0));
+        ArrayList<Integer> ans = new ArrayList<Integer>(A.size());
+        if (A.size() == 1) {
+            ans.add(A.get(0) + B.get(0));
             return ans;
         }
-        Collections.sort(A,Collections.reverseOrder());
-        Collections.sort(B,Collections.reverseOrder());
-        int aM1=0;int aM2=0;
-        int bM1=-1;int bM2=-1;
+        Collections.sort(A, Collections.reverseOrder());
+        Collections.sort(B, Collections.reverseOrder());
+        int aM1 = 0;
+        int aM2 = 0;
+        int bM1 = -1;
+        int bM2 = -1;
 
-        ArrayList<Integer> max1=A;
-        ArrayList<Integer> max1Op=B;
-        ArrayList<Integer> max2=B;
-        ArrayList<Integer> max2Op=A;
+        ArrayList<Integer> max1 = A;
+        ArrayList<Integer> max1Op = B;
+        ArrayList<Integer> max2 = B;
+        ArrayList<Integer> max2Op = A;
 
-        if(A.get(0)<B.get(1)){
-            max1=B;
-            max1Op=A;
-            aM1=1;
-        }else if(B.get(0)<A.get(1)){
-            max2=A;
-            max2Op=B;
-            aM2=1;
+        if (A.get(0) < B.get(1)) {
+            max1 = B;
+            max1Op = A;
+            aM1 = 1;
+        } else if (B.get(0) < A.get(1)) {
+            max2 = A;
+            max2Op = B;
+            aM2 = 1;
         }
 
-        for(int i=1;i<=A.size();i++){
-            int sum1=max1.get(aM1)+max1Op.get(bM1+1);
-            int sum2=max2.get(aM2)+max2Op.get(bM2+1);
-            if(sum1>=sum2){
+        for (int i = 1; i <= A.size(); i++) {
+            int sum1 = max1.get(aM1) + max1Op.get(bM1 + 1);
+            int sum2 = max2.get(aM2) + max2Op.get(bM2 + 1);
+            if (sum1 >= sum2) {
                 ans.add(sum1);
-                bM1=bM1+1;
-            }else{
+                bM1 = bM1 + 1;
+            } else {
                 ans.add(sum2);
-                bM2=bM2+1;
+                bM2 = bM2 + 1;
             }
         }
         return ans;
+    }
+
+    public ArrayList<Integer> order(ArrayList<Integer> heights, ArrayList<Integer> infronts) {
+        int size = heights.size();
+        TreeMap<Integer, Integer> k = new TreeMap<Integer, Integer>();
+        for (int i = 0; i < size; i++) {
+            k.put(heights.get(i), infronts.get(i));
+        }
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        for (int i = 0; i < size; i++) {
+            res.add(-1);
+        }
+        while (k.size() != 0) {
+            int num = k.firstKey();
+            int pos = k.get(num);
+            //	System.out.println("num is"+num+"pos is"+pos);
+            int count = -1;
+            int i = 0;
+            while (count != pos) {
+                if (res.get(i) == -1) {
+                    count++;
+                }
+                i++;
+            }
+            i--;
+            //	System.out.println("i value after 1st"+i);
+            while (res.get(i) != -1) {
+                i++;
+            }
+            //	System.out.println("i value after 2t"+i);
+            res.set(i, num);
+            k.remove(num);
+        }
+        return res;
+    }
+
+    public static class Solution2 {
+        public ArrayList<Integer> order(ArrayList<Integer> heights, ArrayList<Integer> infronts) {
+
+            quicksort(heights, 0, heights.size() - 1, infronts);
+            SegmentTree root = new SegmentTree(heights.get(0));
+
+            for (int i = 1; i < heights.size(); i++) {
+                root.insert(heights.get(i), infronts.get(i));
+            }
+
+            ArrayList<Integer> output = new ArrayList<Integer>();
+            root.inorder(output);
+            return output;
+        }
+
+        public void quicksort(ArrayList<Integer> ar, int start, int end, ArrayList<Integer> infronts) {
+            if (start < end) {
+                int middle = partition(ar, start, end, infronts);
+                quicksort(ar, start, middle - 1, infronts);
+                quicksort(ar, middle + 1, end, infronts);
+            }
+        }
+
+        public int partition(ArrayList<Integer> ar, int start, int end, ArrayList<Integer> infronts) {
+            int index = start - 1;
+            int pivot = ar.get(end);
+            int traverse = start;
+            while (traverse < end) {
+                if (ar.get(traverse) > pivot) {
+                    index++;
+                    swap(ar, infronts, traverse, index);
+                }
+                traverse++;
+            }
+            index++;
+            swap(ar, infronts, traverse, index);
+            return index;
+        }
+
+        public void swap(ArrayList<Integer> ar, ArrayList<Integer> offset, int traverse, int index) {
+            int temp = ar.get(traverse);
+            ar.set(traverse, ar.get(index));
+            ar.set(index, temp);
+
+            temp = offset.get(traverse);
+            offset.set(traverse, offset.get(index));
+            offset.set(index, temp);
+        }
+
+
+        class SegmentTree {
+            SegmentTree left, right;
+            int data, value;
+
+            public SegmentTree(int data) {
+                this.data = data;
+                this.value = 1;
+            }
+
+            public void inorder(ArrayList<Integer> output) {
+                if (this.left != null) {
+                    this.left.inorder(output);
+                }
+                output.add(this.data);
+                if (this.right != null) {
+                    this.right.inorder(output);
+                }
+            }
+
+            public void insert(int data, int value) {
+//			SegmentTree newNode = new SegmentTree(data);
+                if (value < this.value) {
+                    this.value += 1;
+                    if (this.left != null) {
+                        this.left.insert(data, value);
+                    } else {
+                        SegmentTree newNode = new SegmentTree(data);
+                        this.left = newNode;
+                    }
+                } else {
+                    if (this.right != null) {
+                        this.right.insert(data, value - this.value);
+                    } else {
+                        SegmentTree newNode = new SegmentTree(data);
+                        this.right = newNode;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void mainly() {
+        outerloop:
+        for (int i=0; i < 5; i++) {
+            for (int j=0; j < 5; j++) {
+                if (i * j > 6) {
+                    System.out.println("Breaking");
+                    break outerloop;
+                }
+                System.out.println(i + " " + j);
+            }
+        }
+        System.out.println("Done");
     }
 
 }
