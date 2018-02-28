@@ -585,8 +585,8 @@ public class Solution {
 
     public void mainly() {
         outerloop:
-        for (int i=0; i < 5; i++) {
-            for (int j=0; j < 5; j++) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (i * j > 6) {
                     System.out.println("Breaking");
                     break outerloop;
@@ -595,6 +595,80 @@ public class Solution {
             }
         }
         System.out.println("Done");
+    }
+
+    public int seats(String A) {
+        long sum = 0;
+        int xC = 0;
+        for (int i = 0; i < A.length(); i++) {
+            if (A.charAt(i) == 'x') {
+                xC++;
+                sum += i;
+            }
+        }
+        if (xC <= 1) {
+            return 0;
+        }
+        int med = (int) sum / xC;
+        long work = 0;
+        int modBase = 10000003;
+        long prev = 0;
+        for (int i = 0; i <= med; i++) {
+            if (A.charAt(i) == 'x') {
+                //i diff
+                prev++;
+                work = (work % modBase + (med - i - prev) % modBase) % modBase;
+            }
+        }
+        work = (work % modBase + prev % modBase) % modBase;
+        prev = 0;
+        for (int i = med; i < A.length(); i++) {
+            if (A.charAt(i) == 'x') {
+                //i diff
+                prev++;
+                work = (work % modBase + (i - med - prev) % modBase) % modBase;
+            }
+        }
+        return (int) work % modBase;
+    }
+
+    public int seats2(String A) {
+        long sum = 0;
+        int xC = 0;
+        for (int i = 0; i < A.length(); i++) {
+            if (A.charAt(i) == 'x') {
+                xC++;
+                sum += i;
+            }
+        }
+        if (xC <= 1) {
+            return 0;
+        }
+        int med = (int) sum / xC;
+        long work = 0;
+        int modBase = 10000003;
+        long prev = 0;
+        for (int i = med; i < A.length(); i++) {
+            if (A.charAt(i) == 'x') {
+                //i diff
+                prev++;
+                work = (work % modBase + (i - med) % modBase) % modBase;
+            }
+        }
+        work = (work % modBase - prev % modBase) % modBase;
+        if (A.charAt(med) == 'x') {
+            work++;
+        }
+        prev = 0;
+        for (int i = med; i >= 0; i--) {
+            if (A.charAt(i) == 'x') {
+                //i diff
+                prev++;
+                work = (work % modBase + (med - i) % modBase) % modBase;
+            }
+        }
+        work = (work % modBase - prev % modBase) % modBase;
+        return (int) work % modBase;
     }
 
 }

@@ -25,7 +25,10 @@ public class SolutionTest extends TestCase {
         }
 //        System.out.println(new Solution().order(ints, ints2));
 //        System.out.println(new Solution.Solution2().order(ints, ints2));
-        new Solution().mainly();
+//        System.out.println(new Solution().seats(".x.x.x...x"));
+        System.out.println(new Solution().seats("x.x.xx.x.xxx.......x..x.xxx..x.xxx"));
+        System.out.println(new Solution().seats2("x.x.xx.x.xxx.......x..x.xxx..x.xxx"));
+//        new Solution().mainly();
 
 
     }
