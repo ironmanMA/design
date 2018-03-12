@@ -357,4 +357,66 @@ public class Solution {
         }
         return (int) (sumz[N][S]);
     }
+
+    public int canJump(int[] A) {
+        boolean[] canJump = new boolean[A.length];
+        canJump[A.length - 1] = true;
+        int minTrueLocation = A.length - 1;
+
+        for (int i = A.length - 2; i >= 0; i--) {
+            if (A[i] == 0) {
+                canJump[i] = false;
+            } else if (A[i] + i >= A.length - 1) {
+                canJump[i] = true;
+                minTrueLocation = i;
+            } else {
+                if (minTrueLocation <= A[i] + i) {
+                    canJump[i] = true;
+                    minTrueLocation = i;
+                } else {
+                    canJump[i] = false;
+                }
+            }
+        }
+        if (canJump[0]) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int maxcoin(int[] A) {
+        long[][] max = new long[A.length][A.length];
+        for (int i = 0; i < A.length; i++) {
+            max[i][i] = A[i];
+        }
+        for (int i = 0; i + 1 < A.length; i++) {
+            max[i][i + 1] = Math.max(max[i][i], max[i + 1][i + 1]);
+        }
+        for (int diag = 2; diag < A.length; diag++) {
+            for (int row = 0; row + diag < A.length; row++) {
+                int col = row + diag;
+
+                //if you pick lE: row, col
+                long currPickLe = A[row];
+                //he picks best of both ends: row+1, col
+                if (A[row + 1] > A[col]) {
+                    currPickLe += max[row + 2][col];
+                } else {
+                    currPickLe += max[row + 1][col - 1];
+                }
+
+                //if you pick rE: row, col
+                long currPickRe = A[col];
+                //he picks best of both ends: row, col-1
+                if (A[row] > A[col - 1]) {
+                    currPickRe += max[row + 1][col - 1];
+                } else {
+                    currPickRe += max[row][col - 2];
+                }
+                max[row][col] = Math.max(currPickLe, currPickRe);
+            }
+        }
+
+        return (int) max[0][A.length - 1];
+    }
 }
