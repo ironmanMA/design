@@ -419,4 +419,46 @@ public class Solution {
 
         return (int) max[0][A.length - 1];
     }
+
+    public int bestJoin(int[] ropeL) {
+        ArrayList<Integer> ropes = new ArrayList<Integer>();
+        Arrays.sort(ropeL);
+        int sum = 0;
+        for (int i = 0; i < ropeL.length; i++) {
+            ropes.add(ropeL[i]);
+            sum += ropeL[i];
+        }
+        return bestSubJoin(ropes, sum);
+    }
+
+    private int bestSubJoin(ArrayList<Integer> ropes, int sumInArr) {
+        int min = Integer.MAX_VALUE;
+        if (ropes.size() == 2) {
+            min = ropes.get(0) * ropes.get(1);
+            System.out.println("For: " + ropes + ", best:" + min);
+            return min;
+        }
+        if (ropes.size() < 2) {
+            min = 0;
+            System.out.println("For: " + ropes + ", best:" + min);
+            return min;
+        }
+
+        for (int fR = 0; fR < ropes.size(); fR++) {
+            int rA = ropes.get(0);
+            ArrayList<Integer> subRopes = new ArrayList<Integer>(ropes);
+            subRopes.remove(0);
+            for (int sR = 0; sR < subRopes.size() - 1; sR++) {
+                int rB = subRopes.get(0);
+                subRopes.remove(0);
+                int cost = rA * rB + bestSubJoin(subRopes, sumInArr - (rA + rB)) + ((rA + rB) * (sumInArr - (rA + rB)));
+                min = Math.min(min, cost);
+                subRopes.add(rB);
+            }
+            subRopes.add(rA);
+        }
+        System.out.println("For: " + ropes + ", best:" + min);
+        return min;
+    }
+
 }
